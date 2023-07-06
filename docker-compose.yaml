@@ -1,0 +1,19 @@
+version: '3'
+services:
+  django:
+    build:
+      context: django
+    ports:
+      - '8000:8000'
+    volumes:
+      - ./django:/code
+    depends_on:
+      - nodejs
+
+  nodejs:
+    build:
+      context: nodejs
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./nodejs:/app
