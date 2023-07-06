@@ -1,0 +1,22 @@
+# Django project files
+*.pyc
+*.pyo
+__pycache__/
+db.sqlite3
+/media/
+/static/
+
+# Node.js dependencies
+/node_modules/
+
+# Environment variables
+.env
+
+# Development tools
+.vscode/
+.idea/
+*.swp
+
+# Compiled files
+dist/
+build/
