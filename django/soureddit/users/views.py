@@ -6,7 +6,7 @@ def homePageView(request):
 
     print('hello')
 
-    return HttpResponse("Hello, World!")
+    return HttpResponse("Hello, World! TUGRUL")
 
 
 def homePageView2(request):
