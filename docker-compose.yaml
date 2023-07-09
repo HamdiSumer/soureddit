@@ -2,7 +2,7 @@ version: '3'
 services:
   django:
     build:
-      context: django
+      context: api
     ports:
       - '8000:8000'
     volumes:
@@ -12,7 +12,7 @@ services:
 
   nodejs:
     build:
-      context: nodejs
+      context: soureddit
     ports:
       - '3000:3000'
     volumes:
