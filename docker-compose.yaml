@@ -6,9 +6,7 @@ services:
     ports:
       - '8000:8000'
     volumes:
-      - ./django:/code
-    depends_on:
-      - nodejs
+      - ./api:/code
 
   nodejs:
     build:
@@ -16,4 +14,6 @@ services:
     ports:
       - '3000:3000'
     volumes:
-      - ./nodejs:/app
+      - ./soureddit:/app
+    depends_on:
+      - django
