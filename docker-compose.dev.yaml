@@ -6,7 +6,9 @@ services:
     ports:
       - '8000:8000'
     volumes:
-      - ./api:/code
+      - type: bind
+        source: ./api
+        target: /opt/app/code
 
   frontend:
     build:
@@ -15,7 +17,9 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - ./soureddit/frontend:/app
+      - type: bind
+        source: ./soureddit/frontend
+        target: /app
 
   backend:
     build:
@@ -24,4 +28,6 @@ services:
     ports:
       - 3001:3001
     volumes:
-      - ./soureddit/backend:/app
+      - type: bind
+        source: ./soureddit/backend
+        target: /app
