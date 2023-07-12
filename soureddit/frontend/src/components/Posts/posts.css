@@ -1,0 +1,11 @@
+.post-list{
+    list-style: none;
+    margin: 2rem;
+    padding: 0;
+}
+
+.post-list li{
+    margin: 1rem;
+    border: 1px solid#ddd;
+    padding: 1rem;
+}
