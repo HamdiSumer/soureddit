@@ -1,11 +1,13 @@
 import React from "react";
 import PostItem from './PostItem'
 import './PostList.css';
+import 'tailwindcss/tailwind.css';
+
 
 const PostList= props =>{
     if(props.items.length === 0){
         return(<div className="center">
-            <h2>Post yok</h2>
+            <h2 className='bg-fuchsia-400'>Post yok</h2>
         </div>
         );
     }

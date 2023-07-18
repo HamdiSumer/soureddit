@@ -1,6 +1,8 @@
 import './App.css';
 import PostList from './components/Post/Posts';
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import 'tailwindcss/tailwind.css';
+
 
 const App = () => {
   return( 

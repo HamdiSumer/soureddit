@@ -1,47 +1,29 @@
-/* base.css */
+.base-template{
+  @apply bg-fuchsia-300 min-h-screen ;
 
-/* Reset default margin and padding */
-body, h1, h2, h3, h4, h5, h6, p, ul, ol, li {
-    margin: 0;
-    padding: 0;
-  }
-  
-  /* Base template styles */
-  .base-template {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
-  
-  header {
-    background-color: #333;
-    color: #fff;
-    padding: 20px;
-  }
-  
-  nav {
-    background-color: #eee;
-    padding: 10px;
-  }
-  
-  nav ul {
-    list-style-type: none;
-  }
-  
-  nav ul li {
-    display: inline-block;
-    margin-right: 10px;
-  }
-  
-  main {
-    flex-grow: 1;
-    padding: 20px;
-  }
-  
-  footer {
-    background-color: #333;
-    color: #fff;
-    padding: 20px;
-    text-align: center;
-  }
-  
+  margin: 0;
+  padding: 0;
+}
+.header-template{
+  @apply bg-fuchsia-300 bg-blue-200 flex items-center justify-center 
+  border-b-2 border-t-0 border-r-0 border-l-0 border-gray-600 border-solid
+  justify-between items-center px-2 font-sans
+}
+.navbar-template{
+  @apply bg-blue-300 font-sans
+}
+.footer-template{
+  @apply bg-gray-600 font-sans
+}
+.main-template{
+  @apply bg-slate-400 font-sans
+}
+.header-logo-template{
+  @apply px-2 text-xl font-medium inline-flex items-center no-underline
+}
+.header-logo-version-template{
+  @apply px-1 text-xs font-light no-underline
+}
+.header-login-template{
+  @apply px-8 text-base font-medium no-underline
+}
