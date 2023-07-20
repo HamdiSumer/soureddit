@@ -10,17 +10,35 @@ const BaseTemplate = () => {
         SouReddit
         <span className='header-logo-version-template' >  v.0.0</span>
       </a>
-      <form action="">
-        <input type='text' placeholder='Makalelerde ara'></input>
+      <form action="" >
+        <input type='text' placeholder='Makalelerde ara' className='header-search-template'></input>
       </form>
       <a className="header-login-template" href='#'>Giriş Yap</a>
     </div>
-    <div>
-      {<h3 className='main-template'>main content</h3>}
+    <main className='main-template'>
+    <aside className='main-aside-template'>
+      <h2 className='main-gundem'>gündem</h2>
+      <ul className='main-gundem-topics-ul'>
+        <li className='main-gundem-topics-li'><a className='better-links' href='#'>Gündemdekiler</a></li>
+        <li className='main-gundem-topics-li'><a className='better-links' href='#'>Gündemdekiler</a></li>
+        <li className='main-gundem-topics-li'><a className='better-links' href='#'>Gündemdekiler</a></li>
+        <li className='main-gundem-topics-li'><a className='better-links' href='#'>Gündemdekiler</a></li>
+        <li className='main-gundem-topics-li'><a className='better-links' href='#'>Gündemdekiler</a></li>
+        <li className='main-gundem-topics-li'><a className='better-links' href='#'>Gündemdekiler</a></li>
+        <li className='main-gundem-topics-li'><a className='better-links' href='#'>Gündemdekiler</a></li>
+        <li className='main-gundem-topics-li'><a className='better-links' href='#'>Gündemdekiler</a></li>
+        <li className='main-gundem-topics-li'><a className='better-links' href='#'>Gündemdekiler</a></li>
+        <li className='main-gundem-topics-li'><a className='better-links' href='#'>Gündemdekiler</a></li>
+        <li className='main-gundem-topics-li'><a className='better-links' href='#'>Gündemdekiler</a></li>
+        <li className='main-gundem-topics-li'><a className='better-links' href='#'>Gündemdekiler</a></li>
+      </ul>
+    </aside>
+    <div className='main-content-template'>
+      <h2>yaran facebook durum güncellemeleri</h2>
+      <p className=''>"türk kadınlarıyla yeteri kadar ilgilenmiyorsunuz beyler. yoksa bir insan durduk yere, patlıcandan reçel, kabaktan tatlı yapmaz."</p>
     </div>
-    <div>
-      {<h4 className='footer-template'>footer content</h4>}
-    </div>
+    
+    </main>
   </div>
   </body>
     

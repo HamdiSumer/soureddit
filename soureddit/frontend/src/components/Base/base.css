@@ -1,13 +1,10 @@
 .base-template{
   @apply bg-fuchsia-300 min-h-screen ;
-
-  margin: 0;
-  padding: 0;
 }
 .header-template{
-  @apply bg-fuchsia-300 bg-blue-200 flex items-center justify-center 
-  border-b-2 border-t-0 border-r-0 border-l-0 border-gray-600 border-solid
-  justify-between items-center px-2 font-sans
+  @apply bg-white flex
+  border-b-2 border-t-4 border-t-eksi-yesili border-r-0 border-l-0 border-gray-600 border-solid
+  justify-between items-center px-2 font-sans h-12
 }
 .navbar-template{
   @apply bg-blue-300 font-sans
@@ -16,14 +13,40 @@
   @apply bg-gray-600 font-sans
 }
 .main-template{
-  @apply bg-slate-400 font-sans
+  @apply bg-white font-sans flex-auto py-6 flex
+}
+.main-gundem{
+  @apply text-base font-medium text-gray-600 text-lg 
+}
+.main-gundem-topics-ul{
+  @apply text-base font-normal text-gray-600 text-lg list-none flex-auto px-0 
+}
+.main-gundem-topics-li{
+  @apply  py-2 no-underline text-sm hover:bg-slate-100
+}
+.main-aside-template{
+  @apply border-r p-3 border-gray-600 w-60 border-solid border-b-0 border-l-0 border-t-0 p-4 flex-wrap
+}
+.main-content-template{
+  @apply items-center justify-between mx-28 max-w-screen-lg
 }
 .header-logo-template{
-  @apply px-2 text-xl font-medium inline-flex items-center no-underline
+  @apply px-2 text-xl font-medium inline-flex items-center no-underline text-eksi-yesili
 }
 .header-logo-version-template{
-  @apply px-1 text-xs font-light no-underline
+  @apply px-1 text-xs font-light no-underline text-black
 }
 .header-login-template{
-  @apply px-8 text-base font-medium no-underline
+  @apply px-8 text-base font-medium no-underline text-gray-600
+}
+.header-search-template{
+  @apply  w-96 h-7 placeholder-gray-600 rounded-md
+}
+
+
+
+/*  props  */
+
+.better-links{
+  @apply no-underline text-gray-500
 }
