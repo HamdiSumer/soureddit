@@ -1,0 +1,26 @@
+/* styles.css */
+.better-links-li {
+    @apply py-2 no-underline text-sm hover:bg-slate-100 list-none focus:text-eksi-yesili
+  }
+  .better-links-ul {
+    @apply text-base font-normal text-gray-600 text-lg list-none flex-auto px-0 overflow-y-auto h-custom_for_scrollbar
+  }
+
+.pagination-buttons{
+    @apply items-center justify-center h-8 text-sm font-light text-white rounded-l
+    bg-gray-800 border-0 border-l border-gray-700 rounded-r hover:bg-gray-900 dark:bg-gray-400
+    dark:border-gray-700 dark:text-gray-600 dark:hover:bg-eksi-yesili dark:hover:text-white
+}
+
+body::-webkit-scrollbar {
+    width: 12px;               /* width of the entire scrollbar */
+}
+      
+body::-webkit-scrollbar-track {
+    background: gray        /* color of the tracking area */
+}
+      
+body::-webkit-scrollbar-thumb {
+    background-color:rgb(129 193 75);    /* color of the scroll thumb */
+    border-radius: 12px;       /* roundness of the scroll thumb */  /* creates padding around scroll thumb */
+}

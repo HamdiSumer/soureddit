@@ -13,22 +13,16 @@
   @apply bg-gray-600 font-sans
 }
 .main-template{
-  @apply bg-white font-sans flex-auto py-6 flex
+  @apply bg-white font-sans flex-auto py-2 flex
 }
 .main-gundem{
-  @apply text-base font-medium text-gray-600 text-lg 
-}
-.main-gundem-topics-ul{
-  @apply text-base font-normal text-gray-600 text-lg list-none flex-auto px-0 
-}
-.main-gundem-topics-li{
-  @apply  py-2 no-underline text-sm hover:bg-slate-100
+  @apply text-base font-medium text-gray-600 text-lg border-b-2 border-solid border-t-0 border-l-0 border-r-0 py-2
 }
 .main-aside-template{
-  @apply border-r p-3 border-gray-600 w-60 border-solid border-b-0 border-l-0 border-t-0 p-4 flex-wrap
+  @apply border-r border-gray-600 w-60 border-solid border-b-0 border-l-0 border-t-0 p-4 flex-wrap px-0
 }
 .main-content-template{
-  @apply items-center justify-between mx-28 max-w-screen-lg
+  @apply items-center justify-between mx-24 max-w-screen-lg my-3
 }
 .header-logo-template{
   @apply px-2 text-xl font-medium inline-flex items-center no-underline text-eksi-yesili
@@ -46,7 +40,6 @@
 
 
 /*  props  */
-
 .better-links{
   @apply no-underline text-gray-500
 }
