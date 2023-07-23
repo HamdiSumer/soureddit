@@ -44,5 +44,4 @@ const BaseTemplate = () => {
     
   );
 };
-
 export default BaseTemplate;

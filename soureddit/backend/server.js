@@ -1,19 +1,18 @@
 // Dependencies
+const express = require('express');
+const bodyParser = require('body-parser');
+const postRoutes = require('./routes/post-routes');
 
-const express = require("express");
+// Create an Express application instance
+const app = express();
 
-// Create Applications
-const app = express()
+// Middleware
+app.use(bodyParser.json());
 
 // Routing
-
-app.get("/", (req, res) => {
-    res.json({hello:"world2"});
-});
-
-app.get("/test", (req, res) => {
-    res.json({hello:"world2"});
-});
+app.use('/api/posts', postRoutes);
 
 // Start our server
-app.listen(3001);
+app.listen(3001, () => {
+  console.log('Server is running on http://localhost:3001');
+});
