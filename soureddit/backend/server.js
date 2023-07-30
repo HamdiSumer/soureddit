@@ -8,11 +8,7 @@ const app = express()
 // Routing
 
 app.get("/", (req, res) => {
-    res.json({hello:"world2"});
-});
-
-app.get("/test", (req, res) => {
-    res.json({hello:"world2"});
+    res.json({hello:"hamdi13"});
 });
 
 // Start our server

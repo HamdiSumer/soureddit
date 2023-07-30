@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 services:
   django:
     build:
@@ -6,28 +6,46 @@ services:
     ports:
       - '8000:8000'
     volumes:
-      - type: bind
-        source: ./api
-        target: /opt/app/code
+      - ./api:/code
+      - C:\soureddit-terraform-sa.json:/code/soureddit-terraform-sa.json
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=/code/soureddit-terraform-sa.json
+    networks:
+      - scrape_network
 
   frontend:
     build:
       context: soureddit/frontend
       dockerfile: Dockerfile
     ports:
-      - 3000:3000
+      - "3000:3000"
     volumes:
-      - type: bind
-        source: ./soureddit/frontend
-        target: /app
+      - ./soureddit/frontend/src:/app/src
+      - /app/node_modules
+    command: npm start
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+      - CASS_HOST=cassandra
+    stdin_open: true
+    tty: true
+    depends_on:
+      - backend
 
   backend:
     build:
       context: soureddit/backend
       dockerfile: Dockerfile
     ports:
-      - 3001:3001
+      - "3001:3001"
     volumes:
-      - type: bind
-        source: ./soureddit/backend
-        target: /app
+      - logs:/app/logs
+      - ./soureddit/backend:/app
+      - /app/node_modules
+    command: npm run dev
+
+volumes:
+  logs:
+
+networks:
+  scrape_network:
