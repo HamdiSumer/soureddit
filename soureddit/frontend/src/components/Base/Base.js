@@ -1,5 +1,5 @@
 import React from 'react';
-import './Base.css'; // Import the base.css file
+import './base.css'; // Import the base.css file
 import TitlesList from '../Pagination/Pagination';
 
 const BaseTemplate = () => {
