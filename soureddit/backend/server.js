@@ -2,8 +2,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const postRoutes = require('./routes/post-routes');
-const HttpError= require('./models/http-error')
+const userRoutes =require('./routes/user-routes');
+const HttpError= require('./models/http-error');
 const mongoose=require('mongoose');
+const { check } = require('express-validator');
 
 // Create an Express application instance
 const app = express();
@@ -13,6 +15,7 @@ app.use(bodyParser.json());
 
 // Routing
 app.use('/posts', postRoutes);
+app.use('/users', userRoutes);
 
 // error handler
 app.use((req, res, next)=>{
