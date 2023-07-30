@@ -9,8 +9,10 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+import os
 from pathlib import Path
+from google.cloud import secretmanager
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,7 +29,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -37,7 +38,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "users"
+    "ScrapeSour",
+    "ScrapeReddit"
 ]
 
 MIDDLEWARE = [
@@ -70,14 +72,20 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "soureddit.wsgi.application"
 
+# DATABASE SETTINGS FOR CLOUD
+client = secretmanager.SecretManagerServiceClient()
+secret_name = "projects/soureddit/secrets/mongo_connection_string/versions/latest"
+response = client.access_secret_version(name=secret_name)
+mongodb_connection_string = response.payload.data.decode("UTF-8")
 
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+    'default': {
+        'ENGINE': 'djongo',
+        'NAME': 'sour',
+        'CLIENT': {
+            'host': mongodb_connection_string
+        }
     }
 }
 
@@ -122,3 +130,5 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+

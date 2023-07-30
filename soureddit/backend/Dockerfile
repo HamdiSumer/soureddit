@@ -1,5 +1,5 @@
 # Base image
-FROM node:14-alpine
+FROM node
 
 # Set working directory
 WORKDIR /app
@@ -16,5 +16,5 @@ COPY . .
 # Expose the application port
 EXPOSE 3001
 
-# Command to start the application
-CMD ["npm", "start"]
+# Default! command to start the application
+CMD ["npm", "run", "dev"]
