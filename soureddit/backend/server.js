@@ -1,10 +1,11 @@
 // Dependencies
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose=require('mongoose');
+
 const postRoutes = require('./routes/post-routes');
 const userRoutes =require('./routes/user-routes');
 const HttpError= require('./models/http-error');
-const mongoose=require('mongoose');
 const { check } = require('express-validator');
 
 // Create an Express application instance

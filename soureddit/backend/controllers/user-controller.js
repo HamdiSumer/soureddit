@@ -4,6 +4,7 @@ const { validationResult } = require('express-validator');
 const HttpError = require('../models/http-error');
 const User = require('../models/user');
 
+//! delete the dummies
 const DUMMY_USERS = [
   {
     id: 'u1',
