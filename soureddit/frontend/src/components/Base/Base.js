@@ -4,7 +4,6 @@ import './Base.css';
 import TitlesList from '../Pagination/Pagination';
 import Auth from "../User/Auth";
 import SignUp from "../User/SignUp";
-import Alert from './Alert';
 
 const BaseTemplate = () => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
