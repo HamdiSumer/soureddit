@@ -31,7 +31,7 @@
   @apply px-1 text-xs font-light no-underline text-black
 }
 .header-login-template{
-  @apply px-8 text-base font-medium no-underline text-gray-600
+  @apply px-2 text-base font-medium no-underline text-gray-600
 }
 .header-search-template{
   @apply  w-96 h-7 placeholder-gray-600 rounded-md 

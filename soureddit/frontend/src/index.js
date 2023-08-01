@@ -1,9 +1,12 @@
+// index.js
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import reportWebVitals from './reportWebVitals';
-import BaseTemplate from './components/Base/Base';
+import ReactDOM from 'react-dom';
+import { BrowserRouter as Router } from 'react-router-dom'; // Import BrowserRouter
+import BaseTemplate from "./components/Base/Base";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<BaseTemplate />);
-
-reportWebVitals();
+ReactDOM.render(
+  <Router>
+      <BaseTemplate/>
+  </Router>,
+  document.getElementById('root')
+);

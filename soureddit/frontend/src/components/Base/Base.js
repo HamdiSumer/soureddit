@@ -1,8 +1,30 @@
-import React from 'react';
-import './base.css'; // Import the base.css file
+import React, { useState } from 'react';
+import Modal from 'react-modal';
+import './Base.css';
 import TitlesList from '../Pagination/Pagination';
+import Auth from "../User/Auth";
+import SignUp from "../User/SignUp";
+import Alert from './Alert';
 
 const BaseTemplate = () => {
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false);
+
+  const handleLoginModalOpen = () => {
+    setIsLoginModalOpen(true);
+  };
+
+  const handleLoginModalClose = () => {
+    setIsLoginModalOpen(false);
+  };
+
+  const handleSignUpModalOpen = () => {
+    setIsSignUpModalOpen(true);
+  };
+
+  const handleSignUpModalClose = () => {
+    setIsSignUpModalOpen(false);
+  };
   return (
     <body className='base-template'>
     <div>
@@ -14,7 +36,10 @@ const BaseTemplate = () => {
       <form action="" >
         <input type='text' placeholder='Ara' className='header-search-template'></input>
       </form>
-      <a className="header-login-template" href='#'>Giriş Yap</a>
+      <div>
+        <a className="header-login-template" href='#' onClick={handleLoginModalOpen}>Giriş Yap</a>
+        <a className="header-login-template" href='#' onClick={handleLoginModalOpen}>Kayıt Ol</a>
+      </div>
     </div>
     <main className='main-template'>
     <aside className='main-aside-template'>
@@ -37,9 +62,16 @@ const BaseTemplate = () => {
       <h2>yaran facebook durum güncellemeleri</h2>
       <p className=''>"türk kadınlarıyla yeteri kadar ilgilenmiyorsunuz beyler. yoksa bir insan durduk yere, patlıcandan reçel, kabaktan tatlı yapmaz."</p>
     </div>
-    
+
     </main>
   </div>
+      <Modal isOpen={isLoginModalOpen} onRequestClose={handleLoginModalClose} contentLabel="Giriş Yap Modalı">
+        <Auth onClose={handleLoginModalClose} />
+      </Modal>
+
+      <Modal isOpen={isSignUpModalOpen} onRequestClose={handleSignUpModalClose} contentLabel="Kayıt Ol Modalı">
+        <SignUp onClose={handleSignUpModalClose} />
+      </Modal>
   </body>
     
   );
