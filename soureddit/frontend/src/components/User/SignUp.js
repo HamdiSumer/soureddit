@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Users from './Users';
 
 const SignUp = ({ onClose }) => {
   const [username, setUsername] = useState('');

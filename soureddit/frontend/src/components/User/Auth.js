@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Users from './Users';
 
 const Auth = ({ onClose, onLoginSuccess }) => {
   const [email, setEmail] = useState('');
@@ -15,17 +14,38 @@ const Auth = ({ onClose, onLoginSuccess }) => {
     setPassword(e.target.value);
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = async(e) => {
     e.preventDefault();
 
-    const user = Users.find((user) => user.email === email && user.password === password);
-
-    if (user) {
+    try {
+      const response = await fetch('http://127.0.0.1:3001/users/login', {
+        method: 'POST',
+        headers: {
+          accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          password, // Sending the password as plain text to the backend
+        }),
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to log in. Please try again.');
+      }
+  
+      // Başarılı giriş yaptığımızı belirten bir obje oluşturalım.
+      const loginData = {
+        success: true,
+        username: 'example_username', // Burada gerçek kullanıcı adınızı alabilirsiniz
+      };
+  
+      // onLoginSuccess fonksiyonunu çağırarak loginData objesini gönderelim
+      onLoginSuccess(loginData);
+      alert('Başarıyla giriş yaptınız')
       onClose();
-      alert(`Başarıyla giriş yaptınız: ${user.username}!`);
-      onLoginSuccess(user); // Pass the user object to onLoginSuccess
       navigate('/');
-    } else {
+    } catch (error) {
       alert('Geçersiz e-posta veya şifre. Lütfen tekrar deneyin.');
     }
   };

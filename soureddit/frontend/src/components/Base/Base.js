@@ -1,18 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo  } from 'react';
 import Modal from 'react-modal';
 import './Base.css';
 import TitlesList from '../Pagination/Pagination';
 import Auth from '../User/Auth';
 import SignUp from '../User/SignUp';
 
-const BaseTemplate = () => {
+const BaseTemplate = React.memo(() => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState('');
 
   const handleLoginModalOpen = () => {
-    setIsLoginModalOpen(true);
+    if(!isLoggedIn){
+      setIsLoginModalOpen(true);
+    }
   };
 
   const handleLoginModalClose = () => {
@@ -20,7 +22,10 @@ const BaseTemplate = () => {
   };
 
   const handleSignUpModalOpen = () => {
-    setIsSignUpModalOpen(true);
+    if (!isLoggedIn) {
+      // Open the sign-up modal only if the user is not logged in
+      setIsSignUpModalOpen(true);
+    }
   };
 
   const handleSignUpModalClose = () => {
@@ -28,10 +33,15 @@ const BaseTemplate = () => {
     setIsLoginModalOpen(true);
   };
 
-  const handleLoginSuccess = (user) => {
-    setIsLoggedIn(true);
-    setUsername(user.username);
-  };
+  const handleLoginSuccess = (loginData) => {
+    // Eğer başarılı giriş yapıldıysa ve kullanıcı adı varsa state'leri güncelleyelim
+    if (loginData.success && loginData.username) {
+      setIsLoggedIn(true);
+      setUsername(loginData.username);
+      setIsLoginModalOpen(false);
+      setIsSignUpModalOpen(false);
+    }
+  }
 
   const handleLogout = () => {
     setIsLoggedIn(false);
@@ -49,23 +59,24 @@ const BaseTemplate = () => {
             <input type='text' placeholder='Ara' className='header-search-template'></input>
           </form>
           <div>
-            {isLoggedIn ? (
-              <div>
-                <span className='header-login-template'>Hoş Geldiniz,{username}</span>
-                <button className='header-login-template' onClick={handleLogout}>
-                  Çıkış Yap
-                </button>
-              </div>
-            ) : (
-              <div>
-                <a className='header-login-template' href='#' onClick={handleLoginModalOpen}>
-                  Giriş Yap
-                </a>
-                <a className='header-login-template' href='#' onClick={handleSignUpModalOpen}>
-                  Kayıt Ol
-                </a>
-              </div>
-            )}
+          {isLoggedIn ? (
+            <div>
+              <span className='header-login-template'>Hoş Geldiniz</span>
+              <button className='header-login-template' onClick={handleLogout}>
+                Çıkış Yap
+              </button>
+            </div>
+          ) : (
+  <div>
+    <a className='header-login-template' href='#' onClick={handleLoginModalOpen}>
+      Giriş Yap
+    </a>
+    <a className='header-login-template' href='#' onClick={handleSignUpModalOpen}>
+      Kayıt Ol
+    </a>
+  </div>
+)}
+
           </div>
         </div>
         <main className='main-template'>
@@ -75,39 +86,6 @@ const BaseTemplate = () => {
           </aside>
           <div className='main-content-template'>
             <h2>yaran facebook durum güncellemeleri</h2>
-            <p className=''>
-              "türk kadınlarıyla yeteri kadar ilgilenmiyorsunuz beyler. yoksa bir insan durduk yere,
-              patlıcandan reçel, kabaktan tatlı yapmaz."
-            </p>
-            <h2>yaran facebook durum güncellemeleri</h2>
-            <p className=''>
-              "türk kadınlarıyla yeteri kadar ilgilenmiyorsunuz beyler. yoksa bir insan durduk yere,
-              patlıcandan reçel, kabaktan tatlı yapmaz."
-            </p><h2>yaran facebook durum güncellemeleri</h2>
-            <p className=''>
-              "türk kadınlarıyla yeteri kadar ilgilenmiyorsunuz beyler. yoksa bir insan durduk yere,
-              patlıcandan reçel, kabaktan tatlı yapmaz."
-            </p><h2>yaran facebook durum güncellemeleri</h2>
-            <p className=''>
-              "türk kadınlarıyla yeteri kadar ilgilenmiyorsunuz beyler. yoksa bir insan durduk yere,
-              patlıcandan reçel, kabaktan tatlı yapmaz."
-            </p><h2>yaran facebook durum güncellemeleri</h2>
-            <p className=''>
-              "türk kadınlarıyla yeteri kadar ilgilenmiyorsunuz beyler. yoksa bir insan durduk yere,
-              patlıcandan reçel, kabaktan tatlı yapmaz."
-            </p><h2>yaran facebook durum güncellemeleri</h2>
-            <p className=''>
-              "türk kadınlarıyla yeteri kadar ilgilenmiyorsunuz beyler. yoksa bir insan durduk yere,
-              patlıcandan reçel, kabaktan tatlı yapmaz."
-            </p><h2>yaran facebook durum güncellemeleri</h2>
-            <p className=''>
-              "türk kadınlarıyla yeteri kadar ilgilenmiyorsunuz beyler. yoksa bir insan durduk yere,
-              patlıcandan reçel, kabaktan tatlı yapmaz."
-            </p><h2>yaran facebook durum güncellemeleri</h2>
-            <p className=''>
-              "türk kadınlarıyla yeteri kadar ilgilenmiyorsunuz beyler. yoksa bir insan durduk yere,
-              patlıcandan reçel, kabaktan tatlı yapmaz."
-            </p><h2>yaran facebook durum güncellemeleri</h2>
             <p className=''>
               "türk kadınlarıyla yeteri kadar ilgilenmiyorsunuz beyler. yoksa bir insan durduk yere,
               patlıcandan reçel, kabaktan tatlı yapmaz."
@@ -125,6 +103,7 @@ const BaseTemplate = () => {
       </Modal>
     </body>
   );
-};
+
+});
 
 export default BaseTemplate;

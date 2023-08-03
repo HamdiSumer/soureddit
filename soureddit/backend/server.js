@@ -12,10 +12,12 @@ const app = express();
 
 // Middleware
 app.use(bodyParser.json());
-app.use(cors({ origin: 'http://localhost:3000/' }));
-
-// Handle preflight requests explicitly
-app.options('*', cors());
+const corsOptions ={
+  origin:'http://localhost:3000',
+  credentials:true,            //access-control-allow-credentials:true
+  optionSuccessStatus:200
+}
+app.use(cors(corsOptions));
 
 // Routing
 app.use('/posts', postRoutes);
