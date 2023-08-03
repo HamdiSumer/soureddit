@@ -1,7 +1,6 @@
 import React from "react";
 import PostItem from './PostItem'
 import './PostList.css';
-import 'tailwindcss/tailwind.css';
 
 
 const PostList= props =>{

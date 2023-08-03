@@ -4,7 +4,7 @@ import './Pagination.css'
 const TitlesList = () => {
   // Assuming you have an array of titles as follows:
   const allTitles = [
-    "Gündemdekiler",
+    "GündemdekilerGündemdekiler",
     "Gündemdekiler",
     "Gündemdekiler",
     "Gündemdekiler",

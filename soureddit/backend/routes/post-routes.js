@@ -2,7 +2,6 @@
 
 const express = require('express');
 const router = express.Router();
-const HttpError= require ('../models/http-error');
 const postController=require('../controllers/post-controller')
 
 
