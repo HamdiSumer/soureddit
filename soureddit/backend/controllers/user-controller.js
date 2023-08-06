@@ -2,6 +2,7 @@ const { validationResult } = require('express-validator');
 
 const HttpError = require('../models/http-error');
 const User = require('../models/user');
+const SelectedItem = require('../models/selectedItems');
 
 const getUsers = async (req, res, next) => {
   let users;
@@ -14,7 +15,7 @@ const getUsers = async (req, res, next) => {
     );
     return next(error);
   }
-  res.json({users: users.map(user => user.toObject({ getters: true }))});
+  res.json({ users: users.map(user => user.toObject({ getters: true })) });
 };
 
 const signup = async (req, res, next) => {
@@ -24,11 +25,11 @@ const signup = async (req, res, next) => {
       new HttpError('Invalid inputs passed, please check your data.', 422)
     );
   }
-  const { username, email, password } = req.body;
+  const { username, email, password, selectedItems } = req.body; // Add selectedItems
 
-  let existingUser
+  let existingUser;
   try {
-    existingUser = await User.findOne({ email: email })
+    existingUser = await User.findOne({ email: email });
   } catch (err) {
     const error = new HttpError(
       'Signing up failed, please try again later.',
@@ -36,15 +37,12 @@ const signup = async (req, res, next) => {
     );
     return next(error);
   }
-  
+
   if (existingUser) {
-    const error = new HttpError(
-      'User exists already, please login instead.',
-      422
-    );
+    const error = new HttpError('User exists already, please login instead.', 422);
     return next(error);
   }
-  
+
   const createdUser = new User({
     username,
     email,
@@ -53,15 +51,20 @@ const signup = async (req, res, next) => {
 
   try {
     await createdUser.save();
+
+    // Create a new SelectedItem document and associate it with the user
+    const selectedItem = new SelectedItem({
+      user: createdUser._id, // Associate with the user
+      items: selectedItems, // Store the selected items
+    });
+
+    await selectedItem.save();
   } catch (err) {
-    const error = new HttpError(
-      'Signing up failed, please try again.',
-      500
-    );
+    const error = new HttpError('Signing up failed, please try again.', 500);
     return next(error);
   }
 
-  res.status(201).json({user: createdUser.toObject({ getters: true })});
+  res.status(201).json({ user: createdUser.toObject({ getters: true }) });
 };
 
 const login = async (req, res, next) => {
@@ -70,7 +73,7 @@ const login = async (req, res, next) => {
   let existingUser;
 
   try {
-    existingUser = await User.findOne({ email: email })
+    existingUser = await User.findOne({ email: email });
   } catch (err) {
     const error = new HttpError(
       'Logging in failed, please try again later.',
@@ -87,7 +90,7 @@ const login = async (req, res, next) => {
     return next(error);
   }
 
-  res.json({message: 'Logged in!'});
+  res.json({ message: 'Logged in!' });
 };
 
 exports.getUsers = getUsers;

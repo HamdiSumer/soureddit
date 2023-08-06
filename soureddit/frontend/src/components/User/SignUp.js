@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Dropdown from '../SearchbarDropdown/SearchbarDropdown';
+import '../SearchbarDropdown/SearchbarDropdown.css';
 
 const SignUp = ({ onClose }) => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [selectedItems, setSelectedItems] = useState([]); // Initialize with an empty array
   const navigate = useNavigate();
 
   const handleSignUp = async (e) => {
@@ -21,7 +24,8 @@ const SignUp = ({ onClose }) => {
         body: JSON.stringify({
           username,
           email,
-          password, // Sending the password as plain text to the backend
+          password,
+          selectedItems // Sending the selected items to the backend
         }),
       });
 
@@ -52,22 +56,31 @@ const SignUp = ({ onClose }) => {
     setPassword(e.target.value);
   };
 
+  const handleSelectedItems = (selectedItems) => {
+    setSelectedItems(selectedItems); // Update the selectedItems state
+  };
   return (
     <div className="sign-up-modal">
       <h2>Kayıt Ol</h2>
       <form onSubmit={handleSignUp}>
         <div className="form-group">
-          <label htmlFor="username">Kullanıcı Adı:</label>
+          <label htmlFor="username">Kullanıcı Adı: </label>
           <input type="text" id="username" value={username} onChange={handleUsernameChange} />
         </div>
         <div className="form-group">
-          <label htmlFor="email">E-posta:</label>
+          <label htmlFor="email">E-posta: </label>
           <input type="email" id="email" value={email} onChange={handleEmailChange} />
         </div>
         <div className="form-group">
-          <label htmlFor="password">Şifre:</label>
+          <label htmlFor="password">Şifre: </label>
           <input type="password" id="password" value={password} onChange={handlePasswordChange} />
         </div>
+        <div className="form-group">
+        <label htmlFor="subs">Subredditler: </label>
+        <div className="dropdown">
+        <Dropdown onItemSelected={handleSelectedItems} />
+        </div>
+      </div>
         <button type="submit">Kayıt Ol</button>
       </form>
     </div>
