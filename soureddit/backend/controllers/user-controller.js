@@ -2,7 +2,6 @@ const { validationResult } = require('express-validator');
 
 const HttpError = require('../models/http-error');
 const User = require('../models/user');
-const SelectedItem = require('../models/selectedItems');
 
 const getUsers = async (req, res, next) => {
   let users;
@@ -25,7 +24,7 @@ const signup = async (req, res, next) => {
       new HttpError('Invalid inputs passed, please check your data.', 422)
     );
   }
-  const { username, email, password, selectedItems } = req.body; // Add selectedItems
+  const { username, email, password, selectedItems } = req.body;
 
   let existingUser;
   try {
@@ -47,18 +46,11 @@ const signup = async (req, res, next) => {
     username,
     email,
     password,
+    selectedItems: selectedItems, // Store the selected items in the user document
   });
 
   try {
     await createdUser.save();
-
-    // Create a new SelectedItem document and associate it with the user
-    const selectedItem = new SelectedItem({
-      user: createdUser._id, // Associate with the user
-      items: selectedItems, // Store the selected items
-    });
-
-    await selectedItem.save();
   } catch (err) {
     const error = new HttpError('Signing up failed, please try again.', 500);
     return next(error);

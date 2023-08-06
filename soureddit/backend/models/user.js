@@ -7,7 +7,7 @@ const userSchema = new Schema({
   username: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true, minlength: 6 },
-  selectedItems: [{ type: Schema.Types.ObjectId, ref: 'SelectedItem' }], // Reference to SelectedItem model
+  selectedItems: [String], // Store the selected items directly within the user document
 });
 
 userSchema.plugin(uniqueValidator);
