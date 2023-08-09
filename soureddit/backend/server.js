@@ -39,6 +39,17 @@ app.use((error, req, res, next) => {
     message: error.message || 'An unexpected error occurred !',
   });
 });
+// Assuming you're using Express.js for your backend
+app.get('/users/:userId', async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const selectedItems = req.query.selectedItems || []; // Default to an empty array if not provided
+    const user = await getUserDataFromDatabase(userId, selectedItems); // Pass the selectedItems to your database function
+    res.status(200).json({ user });
+  } catch (error) {
+    res.status(500).json({ message: 'Could not fetch user.' });
+  }
+});
 
 // Start our server
 mongoose

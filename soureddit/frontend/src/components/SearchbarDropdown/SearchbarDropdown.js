@@ -54,14 +54,14 @@ function DropdownComponent({ onItemSelected }) {
         />
         {filter && (
           <div id="myDropdown" className="dropdown-content show">
-            {dropdownItems && dropdownItems.map((label) => ( // Use "label" instead of "item"
+            {dropdownItems && dropdownItems.map((label) => ( 
               <a
                 key={label} // Use "label" as the key
                 href={`#${label}`} // Use "label" in href
                 style={{
                   display: label.toUpperCase().includes(filter.toUpperCase()) ? '' : 'none',
                 }}
-                onClick={() => handleDropdownItemClick(label)} // Use "label" here as well
+                onClick={() => handleDropdownItemClick(label)}
               >
                 {label}
               </a>
