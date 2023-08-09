@@ -36,7 +36,11 @@
 .header-search-template{
   @apply  w-96 h-7 placeholder-gray-600 rounded-md 
 }
-
+.buttons{
+  @apply items-center justify-center h-8 text-sm font-light text-white rounded-l
+  bg-gray-800 border-0 border-l border-gray-700 rounded-r hover:bg-gray-900 dark:bg-gray-200
+  dark:border-gray-700 dark:text-gray-600 dark:hover:bg-eksi-yesili dark:hover:text-white
+}
 
 
 /*  props  */

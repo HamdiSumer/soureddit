@@ -1,9 +1,20 @@
 const express = require('express');
-const { check } = require('express-validator'); // Make sure this line is correct
+const { check } = require('express-validator');
 
 const usersController = require('../controllers/user-controller');
+const Subreddit = require('../models/subreddits');
 
 const router = express.Router();
+
+router.get('/subreddits', async (req, res, next) => {
+  try {
+    const subreddits = await Subreddit.find();
+    res.json(subreddits);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error fetching subreddits' });
+  }
+});
 
 router.get('/', usersController.getUsers);
 
@@ -18,5 +29,8 @@ router.post(
 );
 
 router.post('/login', usersController.login);
+
+// New route to fetch user by userId
+router.get('/:userId', usersController.getUserById);
 
 module.exports = router;

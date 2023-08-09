@@ -1,18 +1,22 @@
-import React, { useState, useMemo  } from 'react';
+import React, { useState } from 'react';
 import Modal from 'react-modal';
 import './Base.css';
 import TitlesList from '../Pagination/Pagination';
 import Auth from '../User/Auth';
 import SignUp from '../User/SignUp';
+import SubSelections from '../User/SubSelections';
 
 const BaseTemplate = React.memo(() => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState('');
+  const [isSubSelectionModalOpen, setIsSubSelectionModalOpen] = useState(false);
+  const [selectedSubs, setSelectedSubs] = useState([]);
+  const [userIdforSelections, setUserIdForSelections] = useState(null); // Initialize user ID as null
 
   const handleLoginModalOpen = () => {
-    if(!isLoggedIn){
+    if (!isLoggedIn) {
       setIsLoginModalOpen(true);
     }
   };
@@ -34,19 +38,30 @@ const BaseTemplate = React.memo(() => {
   };
 
   const handleLoginSuccess = (loginData) => {
-    // Eğer başarılı giriş yapıldıysa ve kullanıcı adı varsa state'leri güncelleyelim
     if (loginData.success && loginData.username) {
       setIsLoggedIn(true);
       setUsername(loginData.username);
+      setUserIdForSelections(loginData.userId); // Set the user ID here
       setIsLoginModalOpen(false);
       setIsSignUpModalOpen(false);
     }
   }
-
   const handleLogout = () => {
     setIsLoggedIn(false);
   };
 
+  const handleSubSelectionModalOpen = () => {
+    setIsSubSelectionModalOpen(true);
+  };
+  
+  const handleSubSelectionModalClose = () => {
+    setIsSubSelectionModalOpen(false);
+  };
+  
+  const handleSubSelectionUpdate = (selectedSubreddits) => {
+    setSelectedSubs(selectedSubreddits);
+    handleSubSelectionModalClose();
+  };
   return (
     <body className='base-template'>
       <div>
@@ -62,7 +77,10 @@ const BaseTemplate = React.memo(() => {
           {isLoggedIn ? (
             <div>
               <span className='header-login-template'>Hoş Geldiniz</span>
-              <button className='header-login-template' onClick={handleLogout}>
+              <button className='buttons' onClick={handleSubSelectionModalOpen}>
+                Subreddit Tercihlerini Güncelle
+              </button>
+              <button className='buttons' onClick={handleLogout}>
                 Çıkış Yap
               </button>
             </div>
@@ -94,6 +112,7 @@ const BaseTemplate = React.memo(() => {
         </main>
       </div>
 
+
       <Modal isOpen={isLoginModalOpen} onRequestClose={handleLoginModalClose} contentLabel='Giriş Yap Modalı'>
         <Auth onClose={handleLoginModalClose} onLoginSuccess={handleLoginSuccess} />
       </Modal>
@@ -101,6 +120,11 @@ const BaseTemplate = React.memo(() => {
       <Modal isOpen={isSignUpModalOpen} onRequestClose={handleSignUpModalClose} contentLabel='Kayıt Ol Modalı'>
         <SignUp onClose={handleSignUpModalClose} />
       </Modal>
+      
+      <Modal isOpen={isSubSelectionModalOpen} onRequestClose={handleSubSelectionModalClose} contentLabel='Subreddit Seçim Modalı'>
+        <SubSelections selectedItems={selectedSubs} onUpdateSelectedItems={handleSubSelectionUpdate} />
+      </Modal>
+
     </body>
   );
 

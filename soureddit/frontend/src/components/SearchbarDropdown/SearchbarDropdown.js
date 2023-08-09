@@ -1,10 +1,26 @@
-import React, { useState } from 'react';
-import './SearchbarDropdown.css'; // Import the corresponding CSS file
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import './SearchbarDropdown.css';
 
 function DropdownComponent({ onItemSelected }) {
   const [filter, setFilter] = useState('');
   const [selectedItems, setSelectedItems] = useState([]);
+  const [dropdownItems, setDropdownItems] = useState([]);
 
+  useEffect(() => {
+    async function fetchDropdownItems() {
+      try {
+        const response = await axios.get('http://127.0.0.1:3001/users/subreddits'); // Adjust the endpoint URL
+        const subredditLabels = response.data.map(subreddit => subreddit.label); // Extract labels from the response
+        setDropdownItems(subredditLabels);
+      } catch (error) {
+        console.error('Error fetching dropdown items:', error);
+      }
+    }
+    
+    fetchDropdownItems();
+  }, []);
+  
   const handleFilterChange = (event) => {
     setFilter(event.target.value);
   };
@@ -12,26 +28,16 @@ function DropdownComponent({ onItemSelected }) {
   const handleDropdownItemClick = (itemLabel) => {
     if (selectedItems.length < 3 && !selectedItems.includes(itemLabel)) {
       setSelectedItems([...selectedItems, itemLabel]);
-      onItemSelected([...selectedItems, itemLabel]); // Notify parent component about selected items
-      setFilter(''); // Clear the filter after selecting an item
+      onItemSelected([...selectedItems, itemLabel]);
+      setFilter('');
     }
   };
 
   const handleRemoveItem = (itemLabel) => {
     const updatedSelectedItems = selectedItems.filter((item) => item !== itemLabel);
     setSelectedItems(updatedSelectedItems);
-    onItemSelected(updatedSelectedItems); // Notify parent component about updated selected items
+    onItemSelected(updatedSelectedItems);
   };
-
-  const dropdownItems = [
-    { id: 'about', label: 'About' },
-    { id: 'base', label: 'Base' },
-    { id: 'blog', label: 'Blog' },
-    { id: 'contact', label: 'Contact' },
-    { id: 'custom', label: 'Custom' },
-    { id: 'support', label: 'Support' },
-    { id: 'tools', label: 'Tools' },
-  ];
 
   const isSearchDisabled = selectedItems.length >= 3;
 
@@ -48,31 +54,31 @@ function DropdownComponent({ onItemSelected }) {
         />
         {filter && (
           <div id="myDropdown" className="dropdown-content show">
-            {dropdownItems.map((item) => (
+            {dropdownItems && dropdownItems.map((label) => ( // Use "label" instead of "item"
               <a
-                key={item.id}
-                href={`#${item.id}`}
+                key={label} // Use "label" as the key
+                href={`#${label}`} // Use "label" in href
                 style={{
-                  display: item.label.toUpperCase().includes(filter.toUpperCase()) ? '' : 'none',
+                  display: label.toUpperCase().includes(filter.toUpperCase()) ? '' : 'none',
                 }}
-                onClick={() => handleDropdownItemClick(item.label)}
+                onClick={() => handleDropdownItemClick(label)} // Use "label" here as well
               >
-                {item.label}
+                {label}
               </a>
             ))}
           </div>
         )}
+
       </div>
 
-      {/* Render selected items */}
       {selectedItems.length > 0 && (
         <div className="selected-items">
-          <h3>Seçilen Subredditler:</h3>
+          <h3>Selected Subreddits:</h3>
           <ul>
             {selectedItems.map((item, index) => (
               <li key={index}>
                 {item}
-                <button type="button" onClick={() => handleRemoveItem(item)}>Sil</button>
+                <button type="button" onClick={() => handleRemoveItem(item)}>Remove</button>
               </li>
             ))}
           </ul>

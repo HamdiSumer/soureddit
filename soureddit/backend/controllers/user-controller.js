@@ -1,5 +1,4 @@
 const { validationResult } = require('express-validator');
-
 const HttpError = require('../models/http-error');
 const User = require('../models/user');
 
@@ -85,6 +84,24 @@ const login = async (req, res, next) => {
   res.json({ message: 'Logged in!' });
 };
 
+const getUserById = async (req, res, next) => {
+  const userId = req.params.userId;
+
+  let user;
+  try {
+    user = await User.findById(userId, '-password');
+  } catch (err) {
+    return next(new HttpError('Could not fetch user.', 500));
+  }
+
+  if (!user) {
+    return next(new HttpError('User not found.', 404));
+  }
+
+  res.json({ user: user.toObject({ getters: true }) });
+};
+
 exports.getUsers = getUsers;
 exports.signup = signup;
 exports.login = login;
+exports.getUserById = getUserById; // Add this line to export the getUserById function
