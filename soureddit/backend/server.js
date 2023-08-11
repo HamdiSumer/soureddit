@@ -47,7 +47,7 @@ app.get('/users/:userId', async (req, res) => {
     const user = await getUserDataFromDatabase(userId, selectedItems); // Pass the selectedItems to your database function
     res.status(200).json({ user });
   } catch (error) {
-    res.status(500).json({ message: 'Could not fetch user.' });
+    res.status(500).json({ message: 'Could not fetch usersssssssssssssssssssss.' });
   }
 });
 

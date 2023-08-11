@@ -41,7 +41,7 @@ const BaseTemplate = React.memo(() => {
     if (loginData.success && loginData.username) {
       setIsLoggedIn(true);
       setUsername(loginData.username);
-      setUserIdForSelections(loginData.userId); // Set the user ID here
+      setUserIdForSelections('64d3efe730bf1ecc764b49dd'); // Set the user ID here
       setIsLoginModalOpen(false);
       setIsSignUpModalOpen(false);
     }
@@ -122,8 +122,9 @@ const BaseTemplate = React.memo(() => {
       </Modal>
       
       <Modal isOpen={isSubSelectionModalOpen} onRequestClose={handleSubSelectionModalClose} contentLabel='Subreddit Seçim Modalı'>
-        <SubSelections selectedItems={selectedSubs} onUpdateSelectedItems={handleSubSelectionUpdate} />
+        <SubSelections userId={userIdforSelections} selectedItems={selectedSubs} onUpdateSelectedItems={handleSubSelectionUpdate} />
       </Modal>
+
 
     </body>
   );
