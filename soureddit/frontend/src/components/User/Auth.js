@@ -34,15 +34,21 @@ const Auth = ({ onClose, onLoginSuccess }) => {
         throw new Error('Failed to log in. Please try again.');
       }
   
-      // Başarılı giriş yaptığımızı belirten bir obje oluşturalım.
+      // Fetch additional user data based on the logged-in user's email
+      const userDataResponse = await fetch(`http://127.0.0.1:3001/users/email/${email}`);
+      const userData = await userDataResponse.json();
+
       const loginData = {
         success: true,
-        username: 'example_username', // Burada gerçek kullanıcı adınızı alabilirsiniz
+        id: userData.user.id,
+        username: userData.user.username,
       };
-  
-      // onLoginSuccess fonksiyonunu çağırarak loginData objesini gönderelim
+
+      console.log(loginData); // loginData'ya bakın
       onLoginSuccess(loginData);
-      alert('Başarıyla giriş yaptınız')
+
+
+      alert(`Başarıyla giriş yaptınız. Hoş geldiniz, ${loginData.username}!`);
       onClose();
       navigate('/');
     } catch (error) {

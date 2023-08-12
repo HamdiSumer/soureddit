@@ -100,8 +100,26 @@ const getUserById = async (req, res, next) => {
 
   res.json({ user: user.toObject({ getters: true }) });
 };
+// Add this function to users-controller.js
+const getUserByEmail = async (req, res, next) => {
+  const email = req.params.email;
+
+  let user;
+  try {
+    user = await User.findOne({ email: email }, '-password');
+  } catch (err) {
+    return next(new HttpError('Could not fetch user.', 500));
+  }
+
+  if (!user) {
+    return next(new HttpError('User not found.', 404));
+  }
+
+  res.json({ user: user.toObject({ getters: true }) });
+};
 
 exports.getUsers = getUsers;
 exports.signup = signup;
 exports.login = login;
-exports.getUserById = getUserById; // Add this line to export the getUserById function
+exports.getUserById = getUserById;
+exports.getUserByEmail = getUserByEmail; // Add this line to export the getUserByEmail function

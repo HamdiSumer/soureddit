@@ -33,4 +33,7 @@ router.post('/login', usersController.login);
 // New route to fetch user by userId
 router.get('/:userId', usersController.getUserById);
 
+// New route to fetch user by email
+router.get('/email/:email', usersController.getUserByEmail); // Add this line to create the route
+
 module.exports = router;

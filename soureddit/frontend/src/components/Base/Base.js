@@ -6,6 +6,9 @@ import Auth from '../User/Auth';
 import SignUp from '../User/SignUp';
 import SubSelections from '../User/SubSelections';
 
+// App elementini belirle
+Modal.setAppElement('#root'); // Varsayılan olarak root elementi
+
 const BaseTemplate = React.memo(() => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false);
@@ -37,15 +40,15 @@ const BaseTemplate = React.memo(() => {
     setIsLoginModalOpen(true);
   };
 
-  const handleLoginSuccess = (loginData) => {
-    if (loginData.success && loginData.username) {
+  const handleLoginSuccess = async (loginData) => {
+    if (loginData.success) {
       setIsLoggedIn(true);
       setUsername(loginData.username);
-      setUserIdForSelections('64d3efe730bf1ecc764b49dd'); // Set the user ID here
+      setUserIdForSelections(loginData.id); // Set the user ID here
       setIsLoginModalOpen(false);
       setIsSignUpModalOpen(false);
     }
-  }
+  };
   const handleLogout = () => {
     setIsLoggedIn(false);
   };
@@ -111,8 +114,6 @@ const BaseTemplate = React.memo(() => {
           </div>
         </main>
       </div>
-
-
       <Modal isOpen={isLoginModalOpen} onRequestClose={handleLoginModalClose} contentLabel='Giriş Yap Modalı'>
         <Auth onClose={handleLoginModalClose} onLoginSuccess={handleLoginSuccess} />
       </Modal>
