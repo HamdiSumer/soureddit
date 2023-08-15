@@ -6,6 +6,7 @@ const postRoutes = require('./routes/post-routes');
 const userRoutes = require('./routes/user-routes');
 const HttpError = require('./models/http-error');
 const cors = require('cors'); // Import the CORS middleware
+const { updateUserSelectedItems } = require('./controllers/user-controller');
 
 // Create an Express application instance
 const app = express();
@@ -24,21 +25,6 @@ app.use('/posts', postRoutes);
 app.use('/users', userRoutes);
 
 
-// error handler
-app.use((req, res, next) => {
-  const error = new HttpError('Could not find this route !', 404);
-  throw error; // Pass the error to the next middleware
-});
-
-app.use((error, req, res, next) => {
-  if (res.headerSent) {
-    return next(error);
-  }
-  res.status(error.code || 500);
-  res.json({
-    message: error.message || 'An unexpected error occurred !',
-  });
-});
 // Assuming you're using Express.js for your backend
 app.get('/users/:userId', async (req, res) => {
   try {
@@ -49,6 +35,32 @@ app.get('/users/:userId', async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: 'Could not fetch usersssssssssssssssssssss.' });
   }
+});
+app.put('/users/:userId/selectedItems', async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const { selectedItems } = req.body;
+
+    const updatedUser = await updateUserSelectedItems(userId, selectedItems);
+    if (!updatedUser) {
+      return res.status(500).json({ message: 'Could not update selected items' });
+    }
+
+    res.status(200).json({ message: 'Selected items updated successfully', user: updatedUser });
+  } catch (error) {
+    console.error('Error updating selected items:', error);
+    res.status(500).json({ message: 'Could not update selected items' });
+  }
+});
+
+app.use((error, req, res, next) => {
+  if (res.headerSent) {
+    return next(error);
+  }
+  res.status(error.code || 500);
+  res.json({
+    message: error.message || 'An unexpected error occurred !',
+  });
 });
 
 // Start our server

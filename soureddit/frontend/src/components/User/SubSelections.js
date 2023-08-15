@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Dropdown from '../SearchbarDropdown/SearchbarDropdown'
 
 function SubSelections({ userId, onUpdateSelectedItems }) {
   const [newSubreddit, setNewSubreddit] = useState('');
@@ -8,23 +9,19 @@ function SubSelections({ userId, onUpdateSelectedItems }) {
   // Fetch user's subreddit selections from the backend
   const fetchUserSubreddits = async () => {
     try {
-      const response = await axios.get(`http://127.0.0.1:3001/users/${userId}`, {
-        params: {
-          selectedItems: selectedItems // Pass the selectedItems array as a query parameter
-        }
-      });
+      const response = await axios.get(`http://127.0.0.1:3001/users/${userId}`);
       setSelectedItems(response.data.user.selectedItems);
     } catch (error) {
       console.error('Error fetching user subreddits:', error);
     }
   };
+  
 
   useEffect(() => {
     fetchUserSubreddits();
   }, [userId]);
-
-  const handleInputChange = (event) => {
-    setNewSubreddit(event.target.value);
+  const handleSelectedItems = (selectedItems) => {
+    setSelectedItems(selectedItems); // Update the selectedItems state
   };
   
   const handleAddSubreddit = async () => {
@@ -35,27 +32,33 @@ function SubSelections({ userId, onUpdateSelectedItems }) {
       setNewSubreddit('');
     }
   };
-
+  
   const handleRemoveSubreddit = async (subreddit) => {
     const updatedSubreddits = selectedItems.filter((item) => item !== subreddit);
     await updateSubredditsInDatabase(updatedSubreddits);
     setSelectedItems(updatedSubreddits);
   };
-
   // Call your backend API to update the user's subreddit selections
-  // Call your backend API to update the user's subreddit selections
-const updateSubredditsInDatabase = async (newSelectedItems) => {
-  try {
-    const updatedUserData = {
-      selectedItems: newSelectedItems
-    };
-
-    await axios.put(`http://127.0.0.1:3001/users/64d3efe730bf1ecc764b49dd`, updatedUserData);
-    onUpdateSelectedItems(newSelectedItems);
-  } catch (error) {
-    console.error('Error updating user subreddits:', error);
-  }
+  const updateSubredditsInDatabase = async (newSelectedItems) => {
+    try {
+      const updatedUserData = {
+        user: {
+          selectedItems: newSelectedItems
+        }
+      };
+  
+      await axios.put(`http://127.0.0.1:3001/users/${userId}/selectedItems`, updatedUserData); // Update the URL with the correct user ID
+      onUpdateSelectedItems(newSelectedItems);
+    } catch (error) {
+      console.error('Error updating user subreddits:', error);
+    }
 };
+
+const handleUpdateSelections = async () => {
+    await updateSubredditsInDatabase(selectedItems.slice()); // Pass a copy of the selectedItems array
+};
+  
+  
 
 
   return (
@@ -74,19 +77,16 @@ const updateSubredditsInDatabase = async (newSelectedItems) => {
           </ul>
         </div>
       )}
-      <div className="subreddit-input">
-        <input
-          type="text"
-          placeholder="Enter subreddit"
-          value={newSubreddit}
-          onChange={handleInputChange}
-          disabled={selectedItems.length >= 3}
-        />
+      <div className="dropdown">
+        <Dropdown onItemSelected={handleSelectedItems} />
+      </div>
         <button type="button" onClick={handleAddSubreddit} disabled={selectedItems.length >= 3}>
           Add
         </button>
+        <button type="button" onClick={handleUpdateSelections}>
+          Update Selections
+        </button>
       </div>
-    </div>
   );
 }
 

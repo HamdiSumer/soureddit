@@ -117,9 +117,55 @@ const getUserByEmail = async (req, res, next) => {
 
   res.json({ user: user.toObject({ getters: true }) });
 };
+const getUsersSelections = async (req, res, next) => {
+  const userId = req.params.userId; // Use userId instead of email
+
+  let user;
+  try {
+    user = await User.findById(userId, 'selectedItems'); // Fetch only the selectedItems field using findById
+  } catch (err) {
+    return next(new HttpError('Could not fetch user selections.', 500));
+  }
+
+  if (!user) {
+    return next(new HttpError('User not found.', 404));
+  }
+
+  res.json({ selectedItems: user.selectedItems }); // Return the selectedItems field
+};
+const updateUserSelectedItems = async (req, res, next) => {
+  const userId = req.params.userId;
+  const { selectedItems } = req.body;
+
+  try {
+    // Check if the user exists in the database
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Update the selectedItems field for the user identified by userId in your database
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { selectedItems: selectedItems },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(500).json({ message: 'Could not update selected itemsaaaa' });
+    }
+
+    res.status(200).json({ message: 'Selected items updated successfully', user: updatedUser });
+  } catch (error) {
+    console.error('Error updating user selected items:', error);
+    res.status(500).json({ message: 'Could not update selected itemsbbbb' });
+  }
+};
 
 exports.getUsers = getUsers;
 exports.signup = signup;
 exports.login = login;
 exports.getUserById = getUserById;
 exports.getUserByEmail = getUserByEmail; // Add this line to export the getUserByEmail function
+exports.getUsersSelections=getUsersSelections;
+exports.updateUserSelectedItems = updateUserSelectedItems;
