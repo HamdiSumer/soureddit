@@ -72,7 +72,6 @@ function SubSelections({ userId, onUpdateSelectedItems }) {
       <button
         type="button"
         onClick={handleUpdateSelections}
-        disabled={selectedItems.length >= 3 || selectedItems === updatedItems}
       >
         Update Selections
       </button>
