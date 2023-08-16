@@ -36,7 +36,7 @@ router.get('/:userId', usersController.getUserById);
 // New route to fetch user by email
 router.get('/email/:email', usersController.getUserByEmail); // Add this line to create the route
 
-router.get('/:userId/selectedItems', usersController.getUsersSelections);
+router.put('/:userId/selectedItems', usersController.updateUserSelectedItems);
 
 
 module.exports = router;

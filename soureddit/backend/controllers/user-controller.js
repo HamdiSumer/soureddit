@@ -135,7 +135,7 @@ const getUsersSelections = async (req, res, next) => {
 };
 const updateUserSelectedItems = async (req, res, next) => {
   const userId = req.params.userId;
-  const { selectedItems } = req.body;
+  const { selectedItems } = req.body.user; // Access selectedItems from the user object in the request body
 
   try {
     // Check if the user exists in the database
@@ -145,22 +145,16 @@ const updateUserSelectedItems = async (req, res, next) => {
     }
 
     // Update the selectedItems field for the user identified by userId in your database
-    const updatedUser = await User.findByIdAndUpdate(
-      userId,
-      { selectedItems: selectedItems },
-      { new: true }
-    );
+    user.selectedItems = selectedItems; // Update the selectedItems field
+    await user.save(); // Save the updated user document
 
-    if (!updatedUser) {
-      return res.status(500).json({ message: 'Could not update selected itemsaaaa' });
-    }
-
-    res.status(200).json({ message: 'Selected items updated successfully', user: updatedUser });
+    res.status(200).json({ message: 'Selected items updated successfully', user: user });
   } catch (error) {
     console.error('Error updating user selected items:', error);
-    res.status(500).json({ message: 'Could not update selected itemsbbbb' });
+    res.status(500).json({ message: 'Could not update selected items' });
   }
 };
+
 
 exports.getUsers = getUsers;
 exports.signup = signup;

@@ -18,7 +18,11 @@ const corsOptions ={
   credentials:true,            //access-control-allow-credentials:true
   optionSuccessStatus:200
 }
-app.use(cors(corsOptions));
+app.use(cors({corsOptions,
+  origin: 'http://localhost:3000', // Replace with your frontend domain
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true, // This is important to allow sending cookies
+ }));
 
 // Routing
 app.use('/posts', postRoutes);
