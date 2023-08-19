@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import '../Base/Base.css';
+
 const Auth = ({ onClose, onLoginSuccess }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -60,18 +62,18 @@ const Auth = ({ onClose, onLoginSuccess }) => {
   return (
     <div className='auth-modal'>
         <div className='login-modal'>
-          <h2>Giriş Yap</h2>
+          <h2 className="better-htags">Giriş Yap</h2>
           <form onSubmit={handleLogin}>
             <div className='form-group'>
-              <label htmlFor='email'>E-posta:</label>
-              <input type='email' id='email' value={email} onChange={handleEmailChange} />
+              <label className='better-labels'htmlFor='email'>E-posta:</label>
+              <input className='better-inputs'type='email' id='email' value={email} onChange={handleEmailChange} />
             </div>
             <div className='form-group'>
-              <label htmlFor='password'>Şifre:</label>
-              <input type='password' id='password' value={password} onChange={handlePasswordChange} />
+              <label className='better-labels' htmlFor='password'>Şifre:</label>
+              <input className='better-inputs' type='password' id='password' value={password} onChange={handlePasswordChange} />
             </div>
-            <button type='submit'>Giriş Yap</button>
-            <button type='button' onClick={onClose}>
+            <button className='buttons' type='submit'>Giriş Yap</button>
+            <button className='buttons' type='button' onClick={onClose}>
               Kapat
             </button>
           </form>

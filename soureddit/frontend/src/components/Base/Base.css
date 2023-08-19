@@ -1,49 +1,73 @@
 .base-template{
-  @apply bg-fuchsia-300 min-h-screen ;
+  @apply bg-reddit-grisi flex-auto -m-2 p-0 ;
 }
 .header-template{
-  @apply bg-white flex
-  border-b-2 border-t-4 border-t-eksi-yesili border-r-0 border-l-0 border-gray-600 border-solid
-  justify-between items-center px-2 font-sans h-12
-}
-.navbar-template{
-  @apply bg-blue-300 font-sans
-}
-.footer-template{
-  @apply bg-gray-600 font-sans
+  @apply bg-reddit-grisi flex
+  border-b-2 border-t-4 border-t-eksi-yesili border-r-0 border-l-0 border-eksi-yesili border-solid
+  justify-between items-center px-2 font-sans h-16
 }
 .main-template{
-  @apply bg-white font-sans flex-auto py-2 flex
+  @apply bg-reddit-grisi font-sans flex-auto py-2 flex
 }
 .main-gundem{
-  @apply text-base font-medium text-gray-600 text-lg border-b-2 border-solid border-t-0 border-l-0 border-r-0 py-2
+  @apply text-base font-medium text-reddit-fontcolor text-lg border-b-2 border-solid border-t-0 border-l-0 border-r-0 py-2 px-2 no-underline list-none
 }
 .main-aside-template{
-  @apply border-r border-gray-600 w-60 border-solid border-b-0 border-l-0 border-t-0 p-4 flex-wrap px-0
+  @apply border-r border-gray-600 w-60 border-solid border-b-0 border-l-0 border-t-0 p-4 flex-wrap px-2 
 }
 .main-content-template{
   @apply items-center justify-between mx-24 max-w-screen-lg my-3
 }
 .header-logo-template{
-  @apply px-2 text-xl font-medium inline-flex items-center no-underline text-eksi-yesili
+  @apply px-2 text-xl font-medium  no-underline text-eksi-yesili w-48 h-8 flex justify-between items-center
 }
 .header-logo-version-template{
-  @apply px-1 text-xs font-light no-underline text-black
+  @apply px-1 text-xs font-light text-black
 }
 .header-login-template{
-  @apply px-2 text-base font-medium no-underline text-gray-600
+  @apply px-2 text-base font-medium no-underline text-eksi-yesili
 }
 .header-search-template{
-  @apply  w-96 h-7 placeholder-gray-600 rounded-md 
+  @apply  w-96 h-7 rounded-lg bg-koyu-reddit-grisi dark:placeholder-526421 dark:placeholder:font-semibold
 }
 .buttons{
-  @apply items-center justify-center h-8 text-sm font-light text-white rounded-l
-  bg-gray-800 border-0 border-l border-gray-700 rounded-r hover:bg-gray-900 dark:bg-gray-200
-  dark:border-gray-700 dark:text-gray-600 dark:hover:bg-eksi-yesili dark:hover:text-white
+  @apply items-center justify-center h-8 text-sm font-light text-white rounded-xl bg-gray-300
+   border-l border-gray-700 dark:border-gray-600 hover:bg-eksi-yesili
+   dark:hover:text-white px-2 mr-2 bg-526421 focus:outline-none 
+}
+.auth-modal{
+  @apply px-10 py-10
+}
+.signup-modal{
+  @apply px-10 py-3
+}
+
+.search-icon-button[type="submit"] {
+  text-indent: -999px;
+  overflow: hidden;
+  width: 40px;
+  padding: 0;
+  margin: 0;
+  border: 1px solid transparent;
+  border-radius: inherit;
+  background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='17' class='bi bi-search' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'%3E%3C/path%3E%3C/svg%3E") no-repeat center;
+  cursor: pointer;
+  opacity: 0.7;
 }
 
 
 /*  props  */
 .better-links{
-  @apply no-underline text-gray-500
+  @apply no-underline text-reddit-fontcolor
+}
+.better-htags{
+  @apply px-2 text-4xl font-medium text-eksi-yesili font-sans
+}
+.better-labels{
+  @apply text-base font-medium text-eksi-yesili text-lg font-sans
+}
+.better-inputs{
+  @apply bg-gray-50 text-sm rounded-lg focus:ring-blue-500
+   focus:border-blue-500 block w-5/12 h-3 p-2.5 dark:placeholder-gray-400
+   text-reddit-fontcolor dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4 font-sans
 }

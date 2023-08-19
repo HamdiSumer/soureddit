@@ -43,11 +43,11 @@ function DropdownComponent({ onItemSelected }) {
 
   return (
     <div>
-      <div className="dropdown">
+      <div>
         <input
+          className='better-inputs'
           type="text"
-          placeholder="Search.."
-          id="myInput"
+          placeholder="Subreddit Ara"
           value={filter}
           onChange={handleFilterChange}
           disabled={isSearchDisabled}
@@ -73,12 +73,12 @@ function DropdownComponent({ onItemSelected }) {
 
       {selectedItems.length > 0 && (
         <div className="selected-items">
-          <h3>Selected Subreddits:</h3>
+          <h3 className='better-labels'>Seçili Subredditler</h3>
           <ul>
             {selectedItems.map((item, index) => (
               <li key={index}>
                 {item}
-                <button type="button" onClick={() => handleRemoveItem(item)}>Remove</button>
+                <button className='buttons' type="button" onClick={() => handleRemoveItem(item)}>Seçimi kaldır</button>
               </li>
             ))}
           </ul>

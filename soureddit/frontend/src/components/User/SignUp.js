@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Dropdown from '../SearchbarDropdown/SearchbarDropdown';
 import '../SearchbarDropdown/SearchbarDropdown.css';
+import'../Base/Base.css';
 
 const SignUp = ({ onClose }) => {
   const [username, setUsername] = useState('');
@@ -60,28 +61,28 @@ const SignUp = ({ onClose }) => {
     setSelectedItems(selectedItems); // Update the selectedItems state
   };
   return (
-    <div className="sign-up-modal">
-      <h2>Kayıt Ol</h2>
+    <div className="signup-modal">
+      <h2 className='better-htags'>Kayıt Ol</h2>
       <form onSubmit={handleSignUp}>
         <div className="form-group">
-          <label htmlFor="username">Kullanıcı Adı: </label>
-          <input type="text" id="username" value={username} onChange={handleUsernameChange} />
+          <label className='better-labels' htmlFor="username">Kullanıcı Adı: </label>
+          <input className='better-inputs' type="text" id="username" value={username} onChange={handleUsernameChange} />
         </div>
         <div className="form-group">
-          <label htmlFor="email">E-posta: </label>
-          <input type="email" id="email" value={email} onChange={handleEmailChange} />
+          <label className='better-labels' htmlFor="email">E-posta: </label>
+          <input className='better-inputs' type="email" id="email" value={email} onChange={handleEmailChange} />
         </div>
         <div className="form-group">
-          <label htmlFor="password">Şifre: </label>
-          <input type="password" id="password" value={password} onChange={handlePasswordChange} />
+          <label className='better-labels' htmlFor="password">Şifre: </label>
+          <input className='better-inputs' type="password" id="password" value={password} onChange={handlePasswordChange} />
         </div>
         <div className="form-group">
-        <label htmlFor="subs">Subredditler: </label>
+        <label className='better-labels' htmlFor="subs">Subredditler: </label>
         <div className="dropdown">
         <Dropdown onItemSelected={handleSelectedItems} />
         </div>
       </div>
-        <button type="submit">Kayıt Ol</button>
+        <button className='buttons' type="submit">Kayıt Ol</button>
       </form>
     </div>
   );
