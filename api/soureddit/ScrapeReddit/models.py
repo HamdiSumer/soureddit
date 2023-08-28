@@ -2,8 +2,12 @@ from django.db import models
 
 
 class Subreddits(models.Model):
-    name = models.CharField(max_length=100, unique=True)
-    count = models.IntegerField(default=0)
+    id = models.AutoField(primary_key=True)
+    subreddit = models.CharField(max_length=255)
+    count = models.PositiveIntegerField(default=1)
+
+    class Meta:
+        db_table = 'subreddits'  # Specify the MongoDB collection name
 
     def __str__(self):
-        return self.name
+        return f"Subreddit: {self.subreddit}, Count: {self.count}"
