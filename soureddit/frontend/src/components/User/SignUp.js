@@ -3,18 +3,19 @@ import { useNavigate } from 'react-router-dom';
 import Dropdown from '../SearchbarDropdown/SearchbarDropdown';
 import '../SearchbarDropdown/SearchbarDropdown.css';
 import'../Base/Base.css';
+import axios from 'axios';
 
 const SignUp = ({ onClose }) => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [selectedItems, setSelectedItems] = useState([]); // Initialize with an empty array
+  const [selectedItems, setSelectedItems] = useState([]);
+
+
   const navigate = useNavigate();
 
   const handleSignUp = async (e) => {
     e.preventDefault();
-    // Validate email and password here (not shown in the code)
-
     try {
       const response = await fetch('http://127.0.0.1:3001/users/signup', {
         method: 'POST',
@@ -26,9 +27,23 @@ const SignUp = ({ onClose }) => {
           username,
           email,
           password,
-          selectedItems // Sending the selected items to the backend
+          selectedItems
         }),
       });
+
+      if (!response.ok) {
+        throw new Error('Failed to sign up. Please try again.');
+      }
+      const dataToSendDjango = {
+        "old_pref":[],
+        "curr_pref": selectedItems,
+      };
+      try {
+        await axios.post('https://80a9-159-146-79-67.ngrok-free.app/ScrapeReddit/add_subreddits/', dataToSendDjango);
+        console.log('Data sent successfully!');
+      } catch (error) {
+        console.error('Error sending data:', error);
+      }
 
       if (!response.ok) {
         throw new Error('Failed to sign up. Please try again.');

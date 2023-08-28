@@ -6,6 +6,7 @@ import Auth from '../User/Auth';
 import SignUp from '../User/SignUp';
 import SubSelections from '../User/SubSelections';
 import logo from '../img/logo.png';
+import Posts from'../Posts/Post'
 
 // App elementini belirle
 Modal.setAppElement('#root'); // Varsayılan olarak root elementi
@@ -48,10 +49,12 @@ const BaseTemplate = React.memo(() => {
       setUserIdForSelections(loginData.id); // Set the user ID here
       setIsLoginModalOpen(false);
       setIsSignUpModalOpen(false);
+      localStorage.setItem('isLoggedIn', 'true');
     }
   };
   const handleLogout = () => {
     setIsLoggedIn(false);
+    localStorage.removeItem('isLoggedIn');
   };
 
   const handleSubSelectionModalOpen = () => {
@@ -109,12 +112,9 @@ const BaseTemplate = React.memo(() => {
               <TitlesList></TitlesList>
             </aside>
             <div className='main-content-template'>
-              <h2>yaran facebook durum güncellemeleri</h2>
-              <p className=''>
-                "türk kadınlarıyla yeteri kadar ilgilenmiyorsunuz beyler. yoksa bir insan durduk yere,
-                patlıcandan reçel, kabaktan tatlı yapmaz."
-              </p>
+              <Posts userId={userIdforSelections} selectedItems={selectedSubs} />
             </div>
+
           </main>
         </div>
         <Modal isOpen={isLoginModalOpen} onRequestClose={handleLoginModalClose} contentLabel='Giriş Yap Modalı' style={{

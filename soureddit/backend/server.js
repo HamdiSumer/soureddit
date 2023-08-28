@@ -6,7 +6,9 @@ const postRoutes = require('./routes/post-routes');
 const userRoutes = require('./routes/user-routes');
 const HttpError = require('./models/http-error');
 const cors = require('cors'); // Import the CORS middleware
-const { updateUserSelectedItems } = require('./controllers/user-controller');
+const { updateUserSelectedItems, updateChance } = require('./controllers/user-controller');
+const Post = require('./models/posts'); // Adjust the path to your model file
+
 
 // Create an Express application instance
 const app = express();
@@ -56,6 +58,23 @@ app.put('/users/:userId/selectedItems', async (req, res) => {
     res.status(500).json({ message: 'Could not update selected items' });
   }
 });
+app.put('/users/:userId/updateChance', async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const { updateChance } = req.body;
+
+    const updatedUser = await updateUserSelectedItems(userId, updateChance);
+    if (!updatedUser) {
+      return res.status(500).json({ message: 'Could not update updateChancessss' });
+    }
+
+    res.status(200).json({ message: 'updateChance updated successfully', user: updatedUser });
+  } catch (error) {
+    console.error('Error updating chance:', error);
+    res.status(500).json({ message: 'Could not update chancebbbbbbb' });
+  }
+});
+
 
 app.use((error, req, res, next) => {
   if (res.headerSent) {

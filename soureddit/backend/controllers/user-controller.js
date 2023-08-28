@@ -154,6 +154,24 @@ const updateUserSelectedItems = async (req, res, next) => {
     res.status(500).json({ message: 'Could not update selected items' });
   }
 };
+const updateChance = async (req, res, next) => {
+  const userId = req.params.userId;
+  const { updateChance } = req.body.user;
+
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    user.updateChance = updateChance;
+    await user.save();
+
+    res.status(200).json({ message: 'updateChance updated successfully', user: user });
+  } catch (error) {
+    console.error('Error updateChance:', error);
+    res.status(500).json({ message: 'Could not updateChance' });
+  }
+};
 
 
 exports.getUsers = getUsers;
@@ -163,3 +181,4 @@ exports.getUserById = getUserById;
 exports.getUserByEmail = getUserByEmail; // Add this line to export the getUserByEmail function
 exports.getUsersSelections=getUsersSelections;
 exports.updateUserSelectedItems = updateUserSelectedItems;
+exports.updateChance = updateChance;

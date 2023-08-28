@@ -30,13 +30,13 @@ router.post(
 
 router.post('/login', usersController.login);
 
-// New route to fetch user by userId
 router.get('/:userId', usersController.getUserById);
 
-// New route to fetch user by email
-router.get('/email/:email', usersController.getUserByEmail); // Add this line to create the route
+router.get('/email/:email', usersController.getUserByEmail);
 
 router.put('/:userId/selectedItems', usersController.updateUserSelectedItems);
+
+router.put('/:userId/updateChance', usersController.updateChance);
 
 
 module.exports = router;
