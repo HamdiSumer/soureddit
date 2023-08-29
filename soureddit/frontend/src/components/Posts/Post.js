@@ -4,7 +4,8 @@ import axios from 'axios';
 function Posts({ userId, onUpdateSelections  }) {
   const [selectedItems, setSelectedItems] = useState([]);
   const [posts, setPosts] = useState([]); // Initialize an empty array for posts
-
+  const [globalPosts, setGlobalPosts] = useState([]);
+  const [subreddits] = useState([]); // Adjust initial subreddits as needed
   // Fetch user's subreddit selections from the backend
   const fetchUserSubreddits = async () => {
     try {
@@ -14,7 +15,7 @@ function Posts({ userId, onUpdateSelections  }) {
       console.error('Error fetching user subreddits:', error);
     }
   };
-
+  //! BU KISIM POSTLAR FİLTRELENMİŞ ŞEKİLDE GELDİĞİNDE GÜNCELLENECEK
   // Fetch all posts from the backend
   const fetchAllPosts = async () => {
     try {
@@ -27,7 +28,7 @@ function Posts({ userId, onUpdateSelections  }) {
       console.error('Error fetching all posts:', error);
     }
   };
-
+  //! BU KISIM POSTLAR FİLTRELENMİŞ ŞEKİLDE GELDİĞİNDE GÜNCELLENECEK
   useEffect(() => {
     fetchUserSubreddits();
     fetchAllPosts();
@@ -39,6 +40,22 @@ function Posts({ userId, onUpdateSelections  }) {
 
   // Filter posts that match the selectedItems
   const filteredPosts = posts.filter((post) => selectedItems.includes(post.subreddit));
+
+  //TODO DJANGODAN SUMMERIZE EDİLMİŞ POSTLARI ÇEKEN GET REQUEST
+  useEffect(() => {
+    // Fetch global posts based on subreddits
+    axios.get('djangoapi/global-posts', {
+        params: {
+            subreddits: selectedItems
+        }
+    })
+    .then(response => {
+        setGlobalPosts(response.data);
+    })
+    .catch(error => {
+        console.error('Error fetching global posts:', error);
+    });
+}, [subreddits]);
 
   return (
     <div>

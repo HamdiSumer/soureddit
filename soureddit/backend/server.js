@@ -9,7 +9,6 @@ const cors = require('cors'); // Import the CORS middleware
 const { updateUserSelectedItems, updateChance } = require('./controllers/user-controller');
 const Post = require('./models/posts'); // Adjust the path to your model file
 
-
 // Create an Express application instance
 const app = express();
 
@@ -86,7 +85,7 @@ app.use((error, req, res, next) => {
   });
 });
 
-// Start our server
+// Start our mongo server
 mongoose
   .connect('mongodb+srv://dev:1234@cluster0.d0urco0.mongodb.net/soureddit?retryWrites=true&w=majority')
   .then(() => {
