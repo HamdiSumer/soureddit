@@ -1,9 +1,10 @@
 import json
-from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .models import Subreddits
 from django.core.exceptions import ObjectDoesNotExist
-
+from django.http import JsonResponse
+from cassandra.cluster import Cluster
+from cassandra.query import dict_factory
 
 @csrf_exempt
 def add_subreddits(request):
@@ -50,23 +51,48 @@ def add_subreddits(request):
 
 
 @csrf_exempt
-def delete_subreddits(request):
-    if request.method == "POST":
+def summarized_data(request) -> json:
+    """
+    This function returns the filtered data according to sent request from cassandra in json format.
+    """
+    if request.method == "GET":
         try:
-            data = json.loads(request.body)
-            for subreddit_name in data:
-                try:
-                    subreddit = Subreddits.objects.get(name=subreddit_name)
-                    if subreddit.count > 0:
-                        subreddit.count -= 1
-                        subreddit.save()
+            requested_subreddits = request.GET.getlist('subreddit')
 
-                        if subreddit.count == 0:
-                            subreddit.delete()
-                except Subreddits.DoesNotExist:
-                    pass
+            # Connect to the Cassandra database
+            cluster = Cluster(['localhost'])
+            session = cluster.connect('soureddit')
 
-            return JsonResponse({"message": "Subreddit counts reduced successfully."})
+            data_set = []
+
+            for subreddit in requested_subreddits:
+                # Build your query to filter data based on subreddits
+                query = f"SELECT * FROM reddit_posts WHERE subreddit = '{subreddit}'"
+                prepared_query = session.prepare(query)
+
+                # change returned rows format to dictionary
+                session.row_factory = dict_factory
+
+                # Execute the query with the provided subreddits
+                result_set = session.execute(prepared_query)
+
+                # Convert the result set to a list of dictionaries or any format you prefer
+                filtered_data = [row for row in result_set]
+
+                data_set.extend(filtered_data)
+
+            # Close the Cassandra connection
+            session.shutdown()
+
+            for i in data_set:
+                if i['body'] is not None:
+                    i['body'] = i['body'].decode('utf-8')
+                if i['comments'] is not None:
+                    i['comments'] = i['comments'].decode('utf-8')
+
+            # Return the filtered data as JSON response
+            return JsonResponse(data_set, safe=False)
+
         except json.JSONDecodeError:
             return JsonResponse({"error": "Invalid JSON data."}, status=400)
 

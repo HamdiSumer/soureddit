@@ -14,6 +14,9 @@ init-mongodb.js
 # shell configurations
 airflow-migration.sh
 
+# airflow variables
+airflow_credentials.json
+
 # Environment variables
 .env
 

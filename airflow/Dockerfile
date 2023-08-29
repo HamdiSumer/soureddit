@@ -2,6 +2,6 @@
 
 FROM apache/airflow:2.6.3
 COPY requirements.txt /requirements.txt
-COPY airflow_credentials.json /opt/airflow/airflow_credentials.json
+COPY ../airflow_credentials.json /opt/airflow/airflow_credentials.json
 RUN pip install --user --upgrade pip
 RUN pip install --no-cache-dir --user -r /requirements.txt

@@ -15,6 +15,9 @@ echo "Creating reddit_posts table..."
 cqlsh cassandra -u cassandra -p cassandra -e "CREATE TABLE IF NOT EXISTS soureddit.reddit_posts (id uuid PRIMARY KEY, insert_timestamp timestamp, post_timestamp timestamp, scrape_timestamp timestamp, subreddit text, subscriber_count int, title text, author text, score int, post_type text, body blob, comments blob, url text);"
 echo "Finished creating user, keyspace and tier tables"
 
+echo "Creating indexes for efficient filtering..."
+cqlsh cassandra -u cassandra -p cassandra -e "CREATE INDEX ON soureddit.reddit_posts (subreddit);"
+
 
 
 
