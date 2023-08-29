@@ -1,30 +1,34 @@
-import openai
 import pandas as pd
+import requests
 
-df = pd.read_parquet("raw_20230827T222023")
+API_URL = "https://api-inference.huggingface.co/models/tuner007/pegasus_summarizer"
+API_TOKEN = "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"
+
+headers = {"Authorization": f"Bearer {API_TOKEN}"}
+
+data = {
+        'a': [1, 2],
+        'comments': ["deneme yapıyorum", "deneme yaptım"]
+    }
+
+df_sum = pd.DataFrame(data)
 
 
 
-# Summarize comments using Spark
-openai.api_key = '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'
 
 
-def summarize(row):
-    response = openai.Completion.create(
-        engine="davinci",  # Use "davinci" for general use, "davinci-codex" for code-related tasks
-        prompt=row['comments'],
-        max_tokens=150  # Adjust the desired length of the summary
-    )
+def summarize(row, state):
+    payload = {"inputs": row['comments']}
 
-    summary = response.choices[0].text.strip()
+    response = requests.post(API_URL, headers=headers, json=payload)
 
-    return summary
+    state['processed_row_count'] += 1
+    print(f"{state['processed_row_count']}/{state['total_rows']} rows has been processed | summarized.")
+    return response.json()[0]['summary_text']
 
-df['comments'] = df.apply(summarize, axis=1)
+total_rows = df_sum.shape[0]
+state = {'processed_row_count': 0, 'total_rows': total_rows}
+df_sum['comments'] = df_sum.apply(summarize, args=(state,), axis=1)
 
-input_text = "DENEME YAPIYORUM"
 
-summary = response.choices[0].text.strip()
 
-# Stop Spark session
-spark.stop()

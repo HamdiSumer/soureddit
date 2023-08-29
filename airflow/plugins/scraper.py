@@ -5,7 +5,7 @@ from datetime import datetime
 
 
 class Scrape:
-    _TOTAL_SECONDS_IN_A_HOUR = 3600
+    _SCRAPE_TIME_LIMIT_IN_SECONDS = 300
 
     def __init__(self, subreddits: list, reddit_credentials: dict):
         self.reddit_credentials = reddit_credentials
@@ -32,7 +32,7 @@ class Scrape:
             result = {}
 
             # if it has been >= 1 hours stop scraping
-            if time_difference >= self._TOTAL_SECONDS_IN_A_HOUR:
+            if time_difference >= self._SCRAPE_TIME_LIMIT_IN_SECONDS:
                 break
 
             # Retrieving comments
@@ -45,7 +45,10 @@ class Scrape:
             result['subreddit'] = subreddit.display_name
             result['subscriber_count'] = subreddit.subscribers
             result['title'] = post.title
-            result['author'] = post.author.name
+            if post.author is not None:
+                result['author'] = post.author.name
+            else:
+                result['author'] = None
             result['score'] = post.score
             result['post_type'] = post.link_flair_text
             result['body'] = post.selftext

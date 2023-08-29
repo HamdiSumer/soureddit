@@ -1,6 +1,6 @@
 import io
 import logging
-from datetime import timedelta
+from datetime import timedelta, datetime
 
 import pandas as pd
 import requests
@@ -84,12 +84,18 @@ def summarize_to_cassandra():
 
             # Convert the pyarrow Table to a pandas DataFrame
             df_sum = parquet_table.to_pandas()
+
+            logging.info(msg='df_sum has been created')
         except Exception as e:
             logging.info(msg=f'Exception {e} is occurred while reading minio object as parquet')
 
         headers = {"Authorization": f"Bearer {API_TOKEN}"}
 
-        def summarize(row):
+        total_rows = df_sum.shape[0]
+
+        processed_row_count = 0
+
+        def summarize(row, state):
             payload = {"inputs": row['comments']}
             try:
                 response = requests.post(API_URL, headers=headers, json=payload)
@@ -98,33 +104,46 @@ def summarize_to_cassandra():
 
             if response.status_code == 200:
                 # summarize success
+                state['processed_row_count'] += 1
+                logging.info(f"{state['processed_row_count']}/{state['total_rows']} rows has been processed | summarized.")
                 return response.json()[0]['summary_text']
             else:
+                state['processed_row_count'] += 1
+                logging.info(
+                    f"{state['processed_row_count']}/{state['total_rows']}th row returned None.")
                 return None
 
         try:
-            df_sum['comments'] = df_sum.apply(summarize, axis=1)
+            total_rows = df_sum.shape[0]
+            state_comments = {'processed_row_count': 0, 'total_rows': total_rows}
+            df_sum['comments'] = df_sum.apply(summarize, args=(state_comments,), axis=1)
         except Exception as e:
             logging.info(msg=f'Exception {e} is occurred while summarizing comments')
 
         try:
-            df_sum['body'] = df_sum.apply(summarize, axis=1)
+            state_body = {'processed_row_count': 0, 'total_rows': total_rows}
+            df_sum['body'] = df_sum.apply(summarize, args=(state_body,), axis=1)
         except Exception as e:
-            logging.info(msg=f'Exception {e} is occurred while summarizing comments')
+            logging.info(msg=f'Exception {e} is occurred while summarizing body')
 
         return df_sum
 
-    def save_to_cassandra(df: pd.DataFrame):
+    def save_to_cassandra(df_cas: pd.DataFrame):
         cluster = Cluster([f'{cassandra_host}'])
         session = cluster.connect()
 
-        columns = df.columns
+        # fix df data types
+        df_cas['insert_timestamp'] = datetime.now()
+        df_cas['body'] = df_cas['body'].str.encode('utf-8')
+        df_cas['comments'] = df_cas['comments'].str.encode('utf-8')
+
+        columns = df_cas.columns
 
         query = f"INSERT INTO {keyspace}.{table} (id, {','.join(map(str, columns))}) VALUES (uuid(), {','.join(map(str, '?' * len(columns)))})"
         prepared = session.prepare(query)
 
         # # Iterate through rows and insert data into Cassandra table
-        for index, row in df.iterrows():
+        for index, row in df_cas.iterrows():
             session.execute(prepared, tuple(row.iloc[range(len(columns))]))
 
     # get object names to process from the kafka message broker
@@ -184,12 +203,13 @@ def summarize_to_cassandra():
         )
 
         try:
+            # TODO: diyelim save_to_cassandra çalıştı ama is_processed çalışmadı exceptiona gidiyor işler karışıyor bunu düşün!
             logging.info(f'Starting processing step...')
             df = process(minio_object)
-            logging.info(f'Starting is_processed step...')
-            is_processed(message)
             logging.info(f'Starting save_to_cassandra step...')
             save_to_cassandra(df)
+            logging.info(f'Starting is_processed step...')
+            is_processed(message)
         except Exception as e:
             logging.info(msg=f'processing failed for the object : {minio_object} the exception is : {e}')
             process_failed(message)
@@ -206,7 +226,7 @@ default_args = {
 # NOTE: DAG declaration - using a Context Manager (an implicit way)
 with DAG(
         dag_id="summarize_and_ingest",
-        schedule_interval=timedelta(minutes=30),
+        schedule_interval=timedelta(minutes=5),
         default_args=default_args,
         catchup=False,
         max_active_runs=1,

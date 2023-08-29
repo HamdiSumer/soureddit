@@ -1,4 +1,6 @@
 import logging
+from datetime import timedelta
+
 from airflow import DAG
 from airflow.utils.dates import days_ago
 from airflow.operators.python import PythonOperator
@@ -121,7 +123,7 @@ default_args = {
 # NOTE: DAG declaration - using a Context Manager (an implicit way)
 with DAG(
         dag_id="raw_data_ingest",
-        schedule_interval="@hourly",
+        schedule_interval=timedelta(minutes=5),
         default_args=default_args,
         catchup=False,
         max_active_runs=1,
