@@ -1,18 +1,18 @@
-import praw
-import pandas as pd
-
 from datetime import datetime
+
+import pandas as pd
+import praw
 
 
 class Scrape:
-    _TOTAL_SECONDS_IN_A_HOUR = 3600
+    _TOTAL_SECONDS_IN_A_HOUR = 3600 * 3
 
-    def __init__(self, subreddits: list, reddit_credentials: {}):
+    def __init__(self, subreddits: list, reddit_credentials: dict):
+        self.reddit_credentials = reddit_credentials
         self.instance = self.create_reddit_instance()
         self.df = self.create_data_frame()
         self.stop_scrape = False
         self.subreddits = subreddits
-        self.reddit_credentials = reddit_credentials
 
     def create_reddit_instance(self):
         return praw.Reddit(client_id=self.reddit_credentials['client_id'],
@@ -39,27 +39,33 @@ class Scrape:
             for comment in post.comments.list():
                 comment_paragraph += comment.body
 
-            result['time_stamp'] = datetime.fromtimestamp(post_time_stamp)
+            result['post_timestamp'] = datetime.fromtimestamp(post_time_stamp)
+            result['scrape_timestamp'] = datetime.now()
             result['subreddit'] = subreddit.display_name
             result['subscriber_count'] = subreddit.subscribers
             result['title'] = post.title
             result['author'] = post.author.name
             result['score'] = post.score
             result['post_type'] = post.link_flair_text
+            result['body'] = post.selftext
             result['comments'] = comment_paragraph
+            result['url'] = "https://www.reddit.com" + post.permalink
 
             self.append_to_df(result)
 
     @staticmethod
     def create_data_frame():
-        df = pd.DataFrame({'time_stamp': pd.Series(dtype='str'),
+        df = pd.DataFrame({'post_timestamp': pd.Series(dtype='str'),
+                           'scrape_timestamp': pd.Series(dtype='str'),
                            'subreddit': pd.Series(dtype='str'),
                            'subscriber_count': pd.Series(dtype='int'),
                            'title': pd.Series(dtype='str'),
                            'author': pd.Series(dtype='str'),
                            'score': pd.Series(dtype='int'),
                            'post_type': pd.Series(dtype='str'),
-                           'comments': pd.Series(dtype='str')})
+                           'body': pd.Series(dtype='str'),
+                           'comments': pd.Series(dtype='str'),
+                           'url': pd.Series(dtype='str')})
 
         return df
 
@@ -79,12 +85,19 @@ class Scrape:
         if len(self.df.head(1)) == 0:
             return None
 
-        df_parquet = self.df.to_parquet()
-        return df_parquet
+        # df_parquet = self.df.to_parquet()
+
+        return self.df
 
 
 if __name__ == "__main__":
-    scrape = Scrape(subreddits=["YouShouldKnow",
-                                "explainlikeimfive"])
-    scrape.perform_scrape()
+    reddit_credential_dict = {"client_id": "w2tL4mslrTK91M98Kn-geg",
+                              "client_secret": "ga7EDpuBGLhBqqOM8WKdbzTq_VFmoQ",
+                              "user_agent": "subreddit-scrape by /MaeleriS"}
 
+    scrape = Scrape(subreddits=["explainlikeimfive"],
+                    reddit_credentials=reddit_credential_dict)
+
+    df_parquet = scrape.perform_scrape()
+
+    print(df_parquet)

@@ -11,8 +11,11 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
 from pathlib import Path
-from google.cloud import secretmanager
+from dotenv import load_dotenv
 
+# Load environment variables from .env file
+if os.environ.get('DOCKER_ENV') != 'True':
+    load_dotenv('../../.env')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,7 +30,7 @@ SECRET_KEY = "django-insecure-d=76u=0^%b$s3b7na^a=g)o7c$^3l=qusxf_4_yokz718rit0c
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -39,8 +42,13 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "ScrapeSour",
-    "ScrapeReddit"
+    "ScrapeReddit",
+    "corsheaders"
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True  # Allow requests from all origins
+CORS_ALLOW_METHODS = ['GET', 'POST']  # Allow specific HTTP methods
+CORS_ALLOW_HEADERS = ['Content-Type']  # Allow specific headers
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -50,6 +58,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "corsheaders.middleware.CorsMiddleware"
 ]
 
 ROOT_URLCONF = "soureddit.urls"
@@ -72,19 +81,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "soureddit.wsgi.application"
 
-# DATABASE SETTINGS FOR CLOUD
-client = secretmanager.SecretManagerServiceClient()
-secret_name = "projects/soureddit/secrets/mongo_connection_string/versions/latest"
-response = client.access_secret_version(name=secret_name)
-mongodb_connection_string = response.payload.data.decode("UTF-8")
-
-
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'sour',
+        'NAME': os.getenv("mongo_db_name"),
         'CLIENT': {
-            'host': mongodb_connection_string
+            'host': os.getenv("mongodb_uri"),
+            'authMechanism': 'SCRAM-SHA-1'
         }
     }
 }
