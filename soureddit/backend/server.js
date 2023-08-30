@@ -7,7 +7,8 @@ const userRoutes = require('./routes/user-routes');
 const HttpError = require('./models/http-error');
 const cors = require('cors'); // Import the CORS middleware
 const { updateUserSelectedItems, updateChance } = require('./controllers/user-controller');
-const Post = require('./models/posts'); // Adjust the path to your model file
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '..', '..', '.env') });
 
 // Create an Express application instance
 const app = express();
@@ -85,14 +86,35 @@ app.use((error, req, res, next) => {
   });
 });
 
-// Start our mongo server
-mongoose
-  .connect('mongodb+srv://dev:1234@cluster0.d0urco0.mongodb.net/soureddit?retryWrites=true&w=majority')
+const uri = process.env.MONGODB_URI;
+
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
-    app.listen(3001, () => {
-      console.log('Server is running on http://localhost:3001');
-    });
+    console.log('Connected to MongoDB');
   })
-  .catch((err) => {
-    console.log(err);
+  .catch(err => {
+    console.error('Error connecting to MongoDB:', err);
   });
+
+// Check for successful connection
+const db = mongoose.connection;
+
+db.once('open', () => {
+  console.log('MongoDB connection is open');
+});
+
+db.on('error', (error) => {
+  console.error('MongoDB connection error:', error);
+});
+
+db.on('disconnected', () => {
+  console.log('MongoDB disconnected');
+});
+
+// Optionally, you can also listen for SIGINT (Ctrl+C) to gracefully close the connection when the Node.js process is terminated
+process.on('SIGINT', () => {
+  db.close(() => {
+    console.log('MongoDB connection closed due to app termination');
+    process.exit(0);
+  });
+});
