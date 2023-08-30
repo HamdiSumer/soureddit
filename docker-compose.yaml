@@ -1,8 +1,7 @@
 version: '3'
 services:
   django:
-    build:
-      context: api
+    image: django:latest
     ports:
       - '8000:8000'
     volumes:
