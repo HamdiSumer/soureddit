@@ -39,7 +39,7 @@ const SignUp = ({ onClose }) => {
         "curr_pref": selectedItems,
       };
       try {
-        await axios.post('https://80a9-159-146-79-67.ngrok-free.app/ScrapeReddit/add_subreddits/', dataToSendDjango);
+        await axios.post('http://localhost:8000/ScrapeReddit/add_subreddits/', dataToSendDjango);
         console.log('Data sent successfully!');
       } catch (error) {
         console.error('Error sending data:', error);

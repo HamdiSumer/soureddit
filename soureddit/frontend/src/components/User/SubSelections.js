@@ -80,7 +80,7 @@ function SubSelections({ userId, onUpdateSelectedItems }) {
     };
 
     try {
-      await axios.post('https://80a9-159-146-79-67.ngrok-free.app/ScrapeReddit/add_subreddits/', dataToSendDjango);
+      await axios.post('http://localhost:8000/ScrapeReddit/add_subreddits/', dataToSendDjango);
       console.log('Data sent successfully to Django!');
     } catch (error) {
       console.error('Error sending data to Django:', error);
@@ -125,7 +125,7 @@ function SubSelections({ userId, onUpdateSelectedItems }) {
       {selectedItems.length > 0 && !isDropdownOpen && (
         <div className="selected-items">
           <h4 className='better-labels'>
-            Kalan Güncelleme Hakkı: {calculateRemainingChances()}
+            Kalan Güncelleme: {calculateRemainingChances()}
           </h4>
           <h3 className='better-labels'>Seçili Subredditler:</h3>
           <ul className='main-gundem'>
