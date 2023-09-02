@@ -108,7 +108,7 @@ const BaseTemplate = React.memo(() => {
           </div>
           <main className='main-template'>
             <aside className='main-aside-template'>
-              <h2 className='main-gundem'>gündem</h2>
+              <h2 className='main-gundem'>gündemiii</h2>
               <TitlesList></TitlesList>
             </aside>
             <div className='main-content-template'>
