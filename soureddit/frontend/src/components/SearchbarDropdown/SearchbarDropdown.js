@@ -11,7 +11,7 @@ function DropdownComponent({ onItemSelected }) {
     async function fetchDropdownItems() {
       try {
         const response = await axios.get('http://127.0.0.1:3001/users/subreddits'); // Adjust the endpoint URL
-        const subredditLabels = response.data.map(subreddit => subreddit.label); // Extract labels from the response
+        const subredditLabels = response.data.map(subreddit => subreddit.id); // Extract labels from the response
         setDropdownItems(subredditLabels);
       } catch (error) {
         console.error('Error fetching dropdown items:', error);
