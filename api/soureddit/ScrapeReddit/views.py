@@ -1,6 +1,8 @@
 import json
+import os
+
 from django.views.decorators.csrf import csrf_exempt
-from .models import Subreddits
+from .models import SubredditsToScrape
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
 from cassandra.cluster import Cluster
@@ -23,25 +25,25 @@ def add_subreddits(request):
                 if len(subreddits_to_add) != 0:
                     for sub in subreddits_to_add:
                         try:
-                            count = Subreddits.objects.get(subreddit=sub).count
-                            Subreddits.objects.filter(subreddit=sub).update(count=count + 1)
+                            count = SubredditsToScrape.objects.get(subreddit=sub).count
+                            SubredditsToScrape.objects.filter(subreddit=sub).update(count=count + 1)
                         except ObjectDoesNotExist:
-                            Subreddits(subreddit=sub, count=1).save()
+                            SubredditsToScrape(subreddit=sub, count=1).save()
 
                 if len(subreddits_to_remove) != 0:
                     for sub in subreddits_to_remove:
-                        count = Subreddits.objects.get(subreddit=sub).count
+                        count = SubredditsToScrape.objects.get(subreddit=sub).count
                         if count != 1:
-                            Subreddits.objects.filter(subreddit=sub).update(count=count - 1)
+                            SubredditsToScrape.objects.filter(subreddit=sub).update(count=count - 1)
                         else:
-                            Subreddits.objects.filter(subreddit=sub).delete()
+                            SubredditsToScrape.objects.filter(subreddit=sub).delete()
             else:
                 for subreddit_name in data['curr_pref']:
                     try:
-                        count = Subreddits.objects.get(subreddit=subreddit_name).count
-                        Subreddits.objects.filter(subreddit=subreddit_name).update(count=count+1)
+                        count = SubredditsToScrape.objects.get(subreddit=subreddit_name).count
+                        SubredditsToScrape.objects.filter(subreddit=subreddit_name).update(count=count+1)
                     except ObjectDoesNotExist:
-                        Subreddits(subreddit=subreddit_name, count=1).save()
+                        SubredditsToScrape(subreddit=subreddit_name, count=1).save()
 
             return JsonResponse({"message": "Subreddit counts updated successfully."})
         except json.JSONDecodeError:
@@ -59,8 +61,10 @@ def summarized_data(request) -> json:
         try:
             requested_subreddits = request.GET.getlist('subreddit')
 
+            cassandra_host = os.environ.get('CASSANDRA_HOST', 'localhost')
+
             # Connect to the Cassandra database
-            cluster = Cluster(['localhost'])
+            cluster = Cluster([f'{cassandra_host}'])
             session = cluster.connect('soureddit')
 
             data_set = []
