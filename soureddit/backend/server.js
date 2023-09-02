@@ -8,7 +8,7 @@ const HttpError = require('./models/http-error');
 const cors = require('cors'); // Import the CORS middleware
 const { updateUserSelectedItems, updateChance } = require('./controllers/user-controller');
 const path = require('path');
-require('dotenv').config({ path: path.join(__dirname, '..', '..', '.env') });
+require('dotenv').config({ path: path.join(__dirname,'..','..','.env') });
 
 // Create an Express application instance
 const app = express();
@@ -86,7 +86,7 @@ app.use((error, req, res, next) => {
   });
 });
 
-const uri = process.env.MONGODB_URI;
+const uri = `${process.env.mongodb_uri}/${process.env.mongo_db_name}`; // Use the corrected variable
 
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
