@@ -8,6 +8,7 @@ from airflow.models import Variable
 from airflow.operators.python_operator import PythonOperator
 from airflow.utils.dates import days_ago
 from cassandra.cluster import Cluster
+from cassandra.auth import PlainTextAuthProvider
 from confluent_kafka import Consumer
 from confluent_kafka import Producer
 from minio import Minio
@@ -33,6 +34,9 @@ API_TOKEN = Variable.get("API_TOKEN")
 cassandra_host = Variable.get("cassandra_host")
 keyspace = Variable.get("keyspace")
 table = Variable.get("table")
+
+CASSANDRA_USER = Variable.get("CASSANDRA_USER")
+CASSANDRA_PASSWORD = Variable.get("CASSANDRA_PASSWORD")
 
 
 def summarize_to_cassandra():
@@ -129,7 +133,8 @@ def summarize_to_cassandra():
         return df_sum
 
     def save_to_cassandra(df_cas: pd.DataFrame):
-        cluster = Cluster([f'{cassandra_host}'])
+        auth_provider = PlainTextAuthProvider(username=f'{CASSANDRA_USER}', password=f'{CASSANDRA_PASSWORD}')
+        cluster = Cluster([f'{cassandra_host}'], auth_provider=auth_provider)
         session = cluster.connect()
 
         # fix df data types

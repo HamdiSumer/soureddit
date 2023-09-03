@@ -22,3 +22,6 @@ cqlsh cassandra -u cassandra -p cassandra -e "CREATE INDEX IF NOT EXISTS subredd
 
 echo "Randomizing root user password..."
 cqlsh cassandra -u cassandra -p cassandra -e "ALTER USER cassandra WITH PASSWORD '${PASS}';"
+echo "Changed default user password"
+
+echo "Finished Initialization"

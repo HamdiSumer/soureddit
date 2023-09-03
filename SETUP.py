@@ -20,18 +20,6 @@ def main():
     subprocess.run(["docker", "exec", "airflow-webserver", "airflow", "variables", "import",
                     "airflow_credentials.json"], shell=True)
 
-    # Install nodejs packages
-    subprocess.run(["npm", "install"], cwd='./soureddit/backend')
-
-    # Run nodejs
-    subprocess.run(["npm", "start"], cwd='./soureddit/backend')
-
-    # Install react packages
-    subprocess.run(["npm", "install"], cwd='./soureddit/frontend')
-
-    # Run react
-    subprocess.run(["npm", "start"], cwd='./soureddit/frontend')
-
 
 if __name__ == "__main__":
     main()
