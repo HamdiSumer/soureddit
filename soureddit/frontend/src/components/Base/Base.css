@@ -4,7 +4,7 @@
 .header-template{
   @apply bg-reddit-grisi flex
   border-b-2 border-t-4 border-t-eksi-yesili border-r-0 border-l-0 border-eksi-yesili border-solid
-  justify-between items-center px-2 font-sans h-16
+  justify-between items-center px-2 font-sans h-16 pt-3
 }
 .main-template{
   @apply bg-reddit-grisi font-sans flex-auto py-2 flex
