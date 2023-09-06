@@ -95,13 +95,13 @@ const BaseTemplate = React.memo(() => {
               <div className='navbar-contents'>
                 <div className='platform-switch'>
                 
-                <button type="button" class=" bg-orange hover:bg-[#fd4400ff]/90 focus:ring-4 focus:outline-none focus:ring-[#fd4400ff]/50 font-medium rounded-lg text-sm px-3.5 py-1.5 text-center inline-flex items-center dark:focus:ring-[#fd4400ff]/55 mx-2 transition-all duration-300 cursor-pointer filter grayscale hover:grayscale-0">
+                <button type="button" class=" transition duration-300 ease-in-out hover:shadow-lg hover:shadow-orange bg-orange hover:bg-[#fd4400ff]/90 focus:ring-4 focus:outline-none focus:ring-[#fd4400ff]/50 font-medium rounded-lg text-sm px-3.5 py-1.5 text-center inline-flex items-center dark:focus:ring-[#fd4400ff]/55 mx-2 transition-all duration-300 cursor-pointer filter grayscale hover:grayscale-0">
                     <img src={redditLogo} alt="Reddit Logo" class="w-6 h-6" viewBox="0 0 20 17" fill="currentColor"/>
                 </button>
-                <button type="button" class=" bg-eksi-yesili hover:bg-eksi-yesili/90 focus:ring-4 focus:outline-none focus:ring-eksi-yesili/50 font-medium rounded-lg text-sm px-3.5 py-1.5 text-center inline-flex items-center dark:focus:ring-eksi-yesili/55 mx-2 transition-all duration-300 cursor-pointer filter grayscale hover:grayscale-0">
+                <button type="button" class=" transition duration-300 ease-in-out hover:shadow-lg hover:shadow-eksi-yesili bg-eksi-yesili hover:bg-eksi-yesili/90 focus:ring-4 focus:outline-none focus:ring-eksi-yesili/50 font-medium rounded-lg text-sm px-3.5 py-1.5 text-center inline-flex items-center dark:focus:ring-eksi-yesili/55 mx-2 transition-all duration-300 cursor-pointer filter grayscale hover:grayscale-0">
                     <img src={eksiLogo} alt="Eksi Logo" class="w-6 h-6" viewBox="0 0 20 17" fill="currentColor"/>
                 </button>
-                <button type="button" class=" bg-black hover:bg-black/90 focus:ring-4 focus:outline-none focus:ring-black/50 font-medium rounded-lg text-sm px-3.5 py-1.5 text-center inline-flex items-center dark:focus:ring-black/55 mx-2 transition-all duration-300 cursor-pointer filter contrast-50 focus:contrast-100 hover:contrast-100">
+                <button type="button" class=" transition duration-300 ease-in-out hover:shadow-lg hover:shadow-black bg-black hover:bg-black/90 focus:ring-4 focus:outline-none focus:ring-black/50 font-medium rounded-lg text-sm px-3.5 py-1.5 text-center inline-flex items-center dark:focus:ring-black/55 mx-2 transition-all duration-300 cursor-pointer filter contrast-50 focus:contrast-100 hover:contrast-100">
                     <img src={twitterLogo} alt="Eksi Logo" class="w-6 h-6" viewBox="0 0 20 17" fill="currentColor"/>
                 </button>
                 </div>
