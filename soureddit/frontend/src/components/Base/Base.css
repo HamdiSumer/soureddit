@@ -1,10 +1,10 @@
 .base-template{
-  @apply bg-reddit-grisi flex-auto -m-2 p-0 ;
+  @apply bg-reddit-grisi flex-auto -m-2 p-0;
 }
 .header-template{
-  @apply bg-reddit-grisi flex
-  border-b-2 border-t-4 border-t-eksi-yesili border-r-0 border-l-0 border-eksi-yesili border-solid
-  justify-between items-center px-2 font-sans h-16 pt-3
+  @apply bg-header-bg flex
+  border-b-4 border-r-0 border-l-0 border-t-0 border-slate-100 border-solid border-spacing-1
+  justify-between items-center font-sans h-16
 }
 .main-template{
   @apply bg-reddit-grisi font-sans flex-auto py-2 flex
@@ -19,27 +19,37 @@
   @apply items-center justify-between mx-24 max-w-screen-lg my-3
 }
 .header-logo-template{
-  @apply px-2 text-xl font-medium  no-underline text-eksi-yesili w-48 h-8 flex justify-between items-center
+  @apply text-xl font-medium  no-underline text-eksi-yesili w-48 h-8 flex justify-between items-center ml-28
 }
 .header-logo-version-template{
-  @apply px-1 text-xs font-light text-black
+  @apply text-xs font-light text-black
+}
+.platform-switch{
+  @apply mr-56 bg-reddit-grisi w-52 py-2 rounded-xl mt-3
+}
+.platform-buttons{
+  @apply px-4 h-7
 }
 .header-login-template{
   @apply px-2 text-base font-medium no-underline text-eksi-yesili
 }
 .header-search-template{
-  @apply  w-96 h-7 rounded-lg bg-koyu-reddit-grisi dark:placeholder-526421 dark:placeholder:font-semibold
+  @apply  w-96 h-7 rounded-lg bg-koyu-reddit-grisi dark:placeholder-orange dark:placeholder:font-semibold
 }
 .buttons{
-  @apply items-center justify-center h-8 text-sm font-light text-white rounded-xl bg-gray-300
-   border-l border-gray-700 dark:border-gray-600 hover:bg-eksi-yesili
-   dark:hover:text-white px-2 mr-2 bg-526421 focus:outline-none 
+  @apply items-center justify-center h-8 font-bold text-sm text-ellipsis  text-orange rounded-xl
+   hover:bg-orange border-none hover:text-white
+  mr-2 bg-header-bg focus:outline-none px-4 py-1
+  max-w-xs transition duration-300 ease-in-out hover:shadow-lg hover:shadow-orange mt-2
 }
 .auth-modal{
   @apply px-10 py-10
 }
 .signup-modal{
   @apply px-10 py-3
+}
+.navbar-contents{
+  @apply px-32 justify-between items-center flex-auto flex
 }
 
 .search-icon-button[type="submit"] {
