@@ -7,6 +7,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      contrast: {
+        25: '.25',
+      },
       colors: {
         'regal-blue': '#243c5a',
         'eksi-yesili':'#52a500ff',

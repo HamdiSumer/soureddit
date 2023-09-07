@@ -3,8 +3,8 @@
 }
 .header-template{
   @apply bg-header-bg flex
-  border-b-4 border-r-0 border-l-0 border-t-0 border-slate-100 border-solid border-spacing-1
-  justify-between items-center font-sans h-16
+  border-b-4 border-r-0 border-l-0 border-t-0 border-slate-100 border-solid border-spacing-1 w-full
+  justify-between items-center font-sans h-16 container
 }
 .main-template{
   @apply bg-reddit-grisi font-sans flex-auto py-2 flex
@@ -25,10 +25,7 @@
   @apply text-xs font-light text-black
 }
 .platform-switch{
-  @apply mr-56 bg-reddit-grisi w-52 py-2 rounded-xl mt-3
-}
-.platform-buttons{
-  @apply px-4 h-7
+  @apply mr-60 bg-reddit-grisi w-auto py-1 rounded-full mt-3 h-11 flex flex-auto h-8
 }
 .header-login-template{
   @apply px-2 text-base font-medium no-underline text-eksi-yesili
