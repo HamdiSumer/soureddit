@@ -7,9 +7,9 @@
   }
 
 .pagination-buttons{
-    @apply items-center justify-center h-8 text-sm font-light text-white rounded-l
-    border-0 border-l border-gray-700 rounded-r hover:bg-gray-900 bg-gray-400
-    dark:border-gray-700 dark:text-gray-600 dark:hover:bg-eksi-yesili dark:hover:text-white
+    @apply items-center justify-center h-8 text-sm font-light text-white rounded-lg
+    border-none hover:bg-light-orange bg-light-orange
+    text-gray-50 dark:hover:text-white max-w-xs transition duration-300 ease-in-out hover:shadow-lg hover:shadow-orange
 }
 
 ::-webkit-scrollbar {
