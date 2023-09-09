@@ -7,6 +7,10 @@ module.exports = {
   ],
   theme: {
     extend: {
+      screens: {
+        'xs': '375px',
+        // => @media (min-width: 640px) { ... }
+      },
       contrast: {
         25: '.25',
       },
