@@ -160,14 +160,39 @@ const BaseTemplate = React.memo(() => {
           )}
         </div>
 
-        <main className='main-template'>
-          <aside className='main-aside-template'>
-            <h2 className='main-gundem'>gündem</h2>
-            <TitlesList></TitlesList>
-          </aside>
-          <div className='main-content-template'>
-            <Posts userId={userIdforSelections} selectedItems={selectedSubs} />
+        <main className='main-template justify-center'>
+
+          <div id="leftdiv" className="bg-white w-2/12 h-full mx-2 bg-[#f8f8f8] rounded-md shadow-gray-500 shadow-md">asdddddd
+            <div className="bg-white">asdddddddd</div>
+            <div>asdddddddd</div>
           </div>
+          <div id="middlediv" className=" w-4/12 h-full">
+            <div id="searchbarsdiv" className="py-2 bg-[#f8f8f8] rounded-md shadow-gray-500 shadow-md">     
+              <form>
+                  <div class="flex justify-center ">
+                      <div class="relative w-8/12">
+                          <input type="search" id="search-dropdown" class=" rounded-lg block p-2.5 w-full z-20 text-sm text-gray-900 bg-reddit-grisi focus:ring-light-orange outline-none" placeholder="Ara.." required></input>
+                          <button type="submit" class="absolute top-0 right-0 p-2.5 text-sm font-medium h-full text-white bg-orange rounded-r-lg transition duration-300 ease-in-out hover:shadow-lg hover:shadow-orange">
+                              <svg class="w-4 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                              </svg>
+                              <span class="sr-only">Search</span>
+                          </button>
+                      </div>
+                  </div>
+              </form>
+            </div>
+              <div>
+                <div className='bg-[#f8f8f8] rounded-md shadow-gray-500 shadow-md my-2'>
+                <Posts userId={userIdforSelections} selectedItems={selectedSubs} />
+                </div> 
+              </div>
+            </div>
+          <div id="rightdiv" className="bg-white w-2/12 h-full mx-2 bg-[#f8f8f8] rounded-md shadow-gray-500 shadow-md">das sdsa</div>
+          
+          {/* <div className='main-content-template'>
+            <Posts userId={userIdforSelections} selectedItems={selectedSubs} />
+          </div> */}
         </main>
 
         <Modal isOpen={isLoginModalOpen} onRequestClose={handleLoginModalClose} contentLabel='Giriş Yap Modalı' style={{

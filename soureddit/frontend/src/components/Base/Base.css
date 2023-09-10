@@ -7,7 +7,7 @@
   font-sans h-16
 }
 .main-template{
-  @apply bg-reddit-grisi font-sans flex-auto py-2 flex container
+  @apply bg-reddit-grisi font-sans flex-auto py-2 flex flex-auto
 }
 .main-gundem{
   @apply text-base font-medium text-reddit-fontcolor text-lg border-b-2 border-solid border-t-0 border-l-0 border-r-0 py-2 px-2 no-underline list-none
