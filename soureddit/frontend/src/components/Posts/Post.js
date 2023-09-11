@@ -17,7 +17,7 @@ function Posts({ userId, onUpdateSelections }) {
   };
   useEffect(() => {
     fetchUserSubreddits();
-  }, [userId]);
+  }, [userId,selectedItems]);
 
   // Function to fetch global posts
   const fetchGlobalPosts = async () => {
@@ -49,7 +49,7 @@ function Posts({ userId, onUpdateSelections }) {
               <p className="inline"> r/{post.subreddit}</p>
               <p className="inline">Postessd by u/{post.author}</p>
               <p className="inline">  {post.post_timestamp}</p>
-              <h3>Title:{post.title}</h3>
+              <a href={post.url}>Title:{post.title}</a>
               <h3>Summary:{post.body}</h3>
               <h3>Comments:{post.comments}</h3>
             </li>
