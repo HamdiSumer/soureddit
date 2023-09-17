@@ -17,10 +17,10 @@ module.exports = {
       colors: {
         'regal-blue': '#243c5a',
         'eksi-yesili':'#52a500ff',
-        'reddit-grisi':'#D8D8D8',
+        'reddit-grisi':'#e3e3e3',
         'reddit-fontcolor':'#87888aff',
         'orange':'#fd4400ff',
-        'light-orange':'#ed7371ff',
+        'light-orange':'#f2a795ff',
         'lighter-orange':'#FADBD8',
         'b5c276':'#b5c276',
         'cinnemon':'#7b3f00',
@@ -33,6 +33,10 @@ module.exports = {
       },
       width: {
         px310_for_logo:'310px',
+        w3pcs:'6%',
+      },
+      fontSize: {
+        '2xs': '0.65rem',
       },
     },
   plugins: [],

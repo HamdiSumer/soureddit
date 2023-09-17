@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
 import './Base.css';
-import TitlesList from '../Pagination/Pagination';
 import Auth from '../User/Auth';
 import SignUp from '../User/SignUp';
 import SubSelections from '../User/SubSelections';
@@ -94,7 +93,7 @@ const BaseTemplate = React.memo(() => {
   return (
     <div>
       <body className='base-template'>
-        <div className='header-template'>
+        <div className='header-template sticky'>
           <a className='header-logo-template xs:w-1/4 sm:w-2/12 lg:w-1/12' href='#'>
             <img src={logo} alt="Logo" />
             <span className='header-logo-version-template'> v.0.0</span>
@@ -162,7 +161,7 @@ const BaseTemplate = React.memo(() => {
 
         <main className='main-template justify-center'>
 
-          <div id="leftdiv" className="bg-white w-2/12 h-full mx-2 bg-[#f8f8f8] rounded-md shadow-gray-500 shadow-md">asdddddd
+          <div id="leftdiv" className="w-2/12 h-full mx-2 bg-[#f8f8f8] rounded-md shadow-gray-500 shadow-md">asdddddd
             <div className="bg-white">asdddddddd</div>
             <div>asdddddddd</div>
           </div>
@@ -183,7 +182,7 @@ const BaseTemplate = React.memo(() => {
               </form>
             </div>
               <div>
-                <div className='bg-[#f8f8f8] rounded-md shadow-gray-500 shadow-md my-2'>
+                <div className=' my-2'>
                 <Posts userId={userIdforSelections} selectedItems={selectedSubs} />
                 </div> 
               </div>
