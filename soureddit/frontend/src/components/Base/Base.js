@@ -9,6 +9,8 @@ import redditLogo from '../img/reddit-logo-16.png';
 import eksiLogo from '../img/eksi.png';
 import twitterLogo from '../img/twitter-logo-change-x-elon-musk-designboom-fb.jpg';
 import Posts from '../Posts/Post';
+import Leftmain from '../Leftmain/leftmain'
+import Rightmain from '../Rightmain/rightmain'
 import 'tailwindcss/tailwind.css';
 
 // App elementini belirle
@@ -161,12 +163,11 @@ const BaseTemplate = React.memo(() => {
 
         <main className='main-template justify-center'>
 
-          <div id="leftdiv" className="w-2/12 h-full mx-2 bg-[#f8f8f8] rounded-md shadow-gray-500 shadow-md">asdddddd
-            <div className="bg-white">asdddddddd</div>
-            <div>asdddddddd</div>
+          <div id="leftdiv" className="w-2/12 h-full mx-2 bg-[#f8f8f8] rounded-md shadow-gray-500 shadow-sm">
+            <Leftmain userId={userIdforSelections} selectedItems={selectedSubs} />
           </div>
           <div id="middlediv" className=" w-4/12 h-full">
-            <div id="searchbarsdiv" className="py-2 bg-[#f8f8f8] rounded-md shadow-gray-500 shadow-md">     
+            <div id="searchbarsdiv" className="py-2 bg-[#f8f8f8] rounded-md shadow-gray-500 shadow-sm">     
               <form>
                   <div className="flex justify-center ">
                       <div className="relative w-8/12">
@@ -187,7 +188,9 @@ const BaseTemplate = React.memo(() => {
                 </div> 
               </div>
             </div>
-          <div id="rightdiv" className="bg-white w-2/12 h-full mx-2 bg-[#f8f8f8] rounded-md shadow-gray-500 shadow-md">das sdsa</div>
+          <div id="rightdiv" className="bg-white w-2/12 h-full mx-2 bg-[#f8f8f8] rounded-md shadow-gray-500 shadow-sm">
+            <Rightmain userId={userIdforSelections} selectedItems={selectedSubs} />
+          </div>
           
           {/* <div className='main-content-template'>
             <Posts userId={userIdforSelections} selectedItems={selectedSubs} />
