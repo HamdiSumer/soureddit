@@ -3,28 +3,29 @@ import axios from 'axios';
 import 'tailwindcss/tailwind.css';
 
 function Rightmain({ userId }) {
-    const [selectedItems, setSelectedItems] = useState([]);
+  const [popularSubreddits, setPopularSubreddits] = useState([]);
 
-    const fetchUserSubreddits = async () => {
-        try {
-          const response = await axios.get(`http://127.0.0.1:3001/users/${userId}`);
-          setSelectedItems(response.data.user.selectedItems);
-        } catch (error) {
-          console.error('Error fetching user subreddits:', error);
-        }
-      };
-      useEffect(() => {
-        fetchUserSubreddits();
-      }, [userId,selectedItems]);
+  useEffect(() => {
+    const fetchPopulars = async () => {
+      try {
+        const response = await axios.get(`http://127.0.0.1:3001/subreddits`);
+        const sortedSubreddits = response.data.sort((a, b) => b.count - a.count);
+        setPopularSubreddits(sortedSubreddits);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchPopulars();
+  }, []);
       return (
         <div className='bg-[#f8f8f8] rounded-md shadow-gray-500 shadow-sm'>
           <h2 className='text-center bg-orange text-gray-50 text-md font-medium rounded-t-md'>Popüler Subredditler</h2>
           <ul className=''>
-            {selectedItems.map((subreddit, index) => (
-              <div>
-                <li className='text-md text-black font-normal mt-1 ml-2' key={index}>
+            {popularSubreddits.map((subreddit) => (
+              <div key={subreddit._id}>
+                <li className='text-md text-black font-normal mt-1 ml-2'>
                   <span className='text-orange font-bold'>r/&nbsp;</span>
-                  <span className='text-black'>{subreddit}</span>
+                  <span className='text-black'>{subreddit.subreddit}</span>
                 </li>
               </div>
             ))}

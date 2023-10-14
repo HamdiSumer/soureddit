@@ -100,7 +100,7 @@ const getUserById = async (req, res, next) => {
 
   res.json({ user: user.toObject({ getters: true }) });
 };
-// Add this function to users-controller.js
+
 const getUserByEmail = async (req, res, next) => {
   const email = req.params.email;
 
@@ -178,7 +178,7 @@ exports.getUsers = getUsers;
 exports.signup = signup;
 exports.login = login;
 exports.getUserById = getUserById;
-exports.getUserByEmail = getUserByEmail; // Add this line to export the getUserByEmail function
+exports.getUserByEmail = getUserByEmail;
 exports.getUsersSelections=getUsersSelections;
 exports.updateUserSelectedItems = updateUserSelectedItems;
 exports.updateChance = updateChance;

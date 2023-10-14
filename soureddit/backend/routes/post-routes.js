@@ -6,4 +6,5 @@ router.get('/', postController.getPosts);
 
 router.get('/:subreddit',postController.getPostsBySubreddit)
 
+
 module.exports = router;

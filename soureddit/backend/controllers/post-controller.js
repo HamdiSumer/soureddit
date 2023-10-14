@@ -38,5 +38,6 @@ const getPostsBySubreddit = async (req, res, next) => {
   res.json({ posts });
 };
 
+
 exports.getPostsBySubreddit = getPostsBySubreddit;
 exports.getPosts = getPosts;
