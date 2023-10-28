@@ -31,12 +31,13 @@ const getPostsBySubreddit = async (req, res, next) => {
   }
 
   if (!posts || posts.length === 0) {
-    const error = new HttpError('Could not find any posts for the provided subreddit.', 404);
+    const error = new HttpError('Could not find any posts for the provided subreddits.', 404);
     return next(error);
   }
 
   res.json({ posts });
 };
+
 
 exports.getPostsBySubreddit = getPostsBySubreddit;
 exports.getPosts = getPosts;

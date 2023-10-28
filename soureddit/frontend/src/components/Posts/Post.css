@@ -1,0 +1,32 @@
+/* Add styles to your red-line and li elements */
+.red-line {
+    @apply w-full h-full bg-light-orange;
+  }
+  
+  li {
+    display: flex; /* Make li a flex container */
+    align-items: stretch; /* Stretch li's children to match its height */
+  }
+  hr {
+  height:1px;
+  width: 100%;
+  background-color:#e0dfe0
+  ;
+}
+.comments-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.comments-divider hr {
+  flex-grow: 1;
+  border: none;
+  border-top: 1px solid #e0dfe0; /* Adjust the border style as needed */
+}
+
+.comments-divider span {
+  padding: 0 10px;
+  color: gray;
+  font-weight:600;
+}

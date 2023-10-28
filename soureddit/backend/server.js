@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const postRoutes = require('./routes/post-routes');
 const userRoutes = require('./routes/user-routes');
+const subredditRoutes = require('./routes/subreddit-routes');
 const HttpError = require('./models/http-error');
 const cors = require('cors'); // Import the CORS middleware
 const { updateUserSelectedItems, updateChance } = require('./controllers/user-controller');
@@ -29,6 +30,7 @@ app.use(cors({corsOptions,
 // Routing
 app.use('/posts', postRoutes);
 app.use('/users', userRoutes);
+app.use('/subreddits', subredditRoutes);
 
 
 // Assuming you're using Express.js for your backend
