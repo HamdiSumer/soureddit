@@ -8,6 +8,9 @@ from django.http import JsonResponse
 from cassandra.cluster import Cluster
 from cassandra.query import dict_factory
 
+from cassandra.auth import PlainTextAuthProvider
+
+
 @csrf_exempt
 def add_subreddits(request):
     if request.method == "POST":
@@ -61,15 +64,23 @@ def summarized_data(request) -> json:
         try:
             requested_subreddits = request.GET.getlist('subreddit')
 
-            cassandra_host = os.environ.get('CASSANDRA_HOST', 'localhost')
+            # Remove the square brackets and split the string by commas
+            requested_subreddits = requested_subreddits[0][1:-1].split(',')
+
+            # Create a list from the split strings
+            requested_subreddit_list = [item.strip("'") for item in requested_subreddits]
+
+            # cassandra_host = os.environ.get('CASSANDRA_HOST', 'localhost')
 
             # Connect to the Cassandra database
-            cluster = Cluster([f'{cassandra_host}'])
+            auth_provider = PlainTextAuthProvider(username='soureddit', password='soureddit')
+            cluster = Cluster(['localhost'], auth_provider=auth_provider)
+
             session = cluster.connect('soureddit')
 
             data_set = []
 
-            for subreddit in requested_subreddits:
+            for subreddit in requested_subreddit_list:
                 # Build your query to filter data based on subreddits
                 query = f"SELECT * FROM reddit_posts WHERE subreddit = '{subreddit}'"
                 prepared_query = session.prepare(query)
