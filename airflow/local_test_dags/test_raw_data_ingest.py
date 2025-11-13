@@ -4,18 +4,18 @@ from minio.error import S3Error
 from kafka import KafkaProducer
 
 
-client_id = "w2tL4mslrTK91M98Kn-geg"
-client_secret = "ga7EDpuBGLhBqqOM8WKdbzTq_VFmoQ"
-user_agent = "subreddit-scrape by /MaeleriS"
+client_id = None
+client_secret = None
+user_agent = None
 
-mongodb_uri = "mongodb+srv://ozetEksiKirmizi:VZwmcxxZ2AmIWIJz@mongosour.iig2uoq.mongodb.net/?retryWrites=true&w=majority"
+mongodb_uri = None
 
 BUCKET = "raw"
 
 minio_endpoint = "minio:9000"
 
-minio_access_key = "minio"
-minio_secret_key = "miniosoureddit"
+minio_access_key =None
+minio_secret_key = None
 
 mongo_db = "soureddit"
 mongo_collection = "subreddits"
