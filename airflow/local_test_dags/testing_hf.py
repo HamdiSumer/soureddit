@@ -3,8 +3,8 @@ import pandas as pd
 
 df = pd.read_parquet("raw_20230827T222023")
 
-API_URL = "https://api-inference.huggingface.co/models/tuner007/pegasus_summarizer"
-API_TOKEN = "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"
+API_URL = None
+API_TOKEN = None
 headers = {"Authorization": f"Bearer {API_TOKEN}"}
 
 
