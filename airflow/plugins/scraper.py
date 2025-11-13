@@ -95,9 +95,9 @@ class Scrape:
 
 
 if __name__ == "__main__":
-    reddit_credential_dict = {"client_id": "w2tL4mslrTK91M98Kn-geg",
-                              "client_secret": "ga7EDpuBGLhBqqOM8WKdbzTq_VFmoQ",
-                              "user_agent": "subreddit-scrape by /MaeleriS"}
+    reddit_credential_dict = {"client_id": None,
+                              "client_secret": None,
+                              "user_agent": None}
 
     scrape = Scrape(subreddits=["explainlikeimfive"],
                     reddit_credentials=reddit_credential_dict)
